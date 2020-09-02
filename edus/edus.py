@@ -9,8 +9,8 @@ from lib.events import Events
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.events = Events(self)
         uic.loadUi(os.path.join(os.path.abspath('gui'), 'edus.ui'), self)
+        self.events = Events(self)
 
 
         ## tabs ##
@@ -47,7 +47,8 @@ class MainWindow(QtWidgets.QMainWindow):
                 )
 
     def onClick(self, obj, name):
-
+        if name == 'chat_send':
+            self.events.chat.addMsg()
         if self.button_tabs.get(obj):
 
             try:

@@ -15,6 +15,7 @@ class Events(object):
 
 
     def loadTab(self, tab, name):
+
         if name == "chat":
             if self.previous == self.network.contacts:
                 self.network.button_values[self.network.current_contact].click()
