@@ -1,4 +1,4 @@
 {
   "admin" : {"name": "admin", "msgs": [{"author": "admin", "author_id": "admin", "text": "Welcome to Edus!", "id": "randomid", "date": 1599236996}]},
-  "friend1": {"name": "friend1", "msgs": [{"author": "you", "author_id": "friend1id", "text": "hi friend", "id": "randommsgid", "date": 1599236996}]}
+  "friend1": {"name": "friend1", "msgs": [{"author": "you", "author_id": "self", "text": "hi friend", "id": "randommsgid", "date": 1599236996}]}
 }

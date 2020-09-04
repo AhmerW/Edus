@@ -904,7 +904,7 @@ QHorizontalLine{
     <item row="2" column="2" rowspan="8">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -1272,14 +1272,14 @@ border: 1px solid #007a78;</string>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QLineEdit" name="lineEdit_2">
+           <widget class="QLineEdit" name="input_classroom_search">
             <property name="placeholderText">
              <string>Search for classroom</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="classroom_search_button">
             <property name="text">
              <string>Search</string>
             </property>
@@ -1292,28 +1292,27 @@ border: 1px solid #007a78;</string>
          </layout>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_2">
+         <widget class="QGroupBox" name="groupbox_classroom">
           <property name="title">
            <string>Your classrooms (1)</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="0">
-            <widget class="QPushButton" name="pushButton_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+            <widget class="QScrollArea" name="scrollArea_4">
+             <property name="widgetResizable">
+              <bool>true</bool>
              </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents_2">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>1271</width>
+                <height>650</height>
+               </rect>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_17"/>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -1361,6 +1360,13 @@ border: 1px solid #007a78;</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
+            <widget class="QLabel" name="classroom_name">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Classroom Main&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QTabWidget" name="verticalTabWidget">
              <property name="currentIndex">
               <number>0</number>
@@ -1381,7 +1387,7 @@ border: 1px solid #007a78;</string>
                     <x>0</x>
                     <y>0</y>
                     <width>1088</width>
-                    <height>601</height>
+                    <height>570</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_9"/>

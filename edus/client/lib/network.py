@@ -1,3 +1,4 @@
+
 import os
 import json
 from lib.security.gen import randUid
@@ -18,17 +19,31 @@ class Student(Person):
 class Teacher(Person):
     pass
 
+class Classroom(object):
+    def __init__(self, name):
+        self.name = name
+        self.cid = randUid( )# class id
+
 class Network(object):
     def __init__(self, window):
         self.window = window
         self.label_added = []
         self.contacts = []
+        self.classrooms = [Classroom("Home")]
+        self.ubu = {}
         self.data = self.getData('contacts.json')
         for uid, contact in self.data.items():
+            self.ubu[uid] = contact["name"]
             self.contacts.append(Person(uid, contact['name']))
         self.current_contact = self.contacts[0].uid
 
         self.button_values = {}
+
+
+
+    def getUbu(self, uid):
+        """username by uid (ubu)"""
+        return self.ubu.get(uid)
 
     def exitSave(self):
         for contact in self.contacts:

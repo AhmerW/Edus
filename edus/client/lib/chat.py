@@ -2,8 +2,11 @@ from PyQt5 import QtWidgets, QtCore, sip, QtGui
 from functools import partial, lru_cache
 from datetime import datetime, date
 from time import time as timestamp
+import threading
 import typing
 from lib.security.gen import randUid
+
+MAX_MSG = 20
 
 class Chat(object):
     def __init__(self, window, network):
@@ -14,11 +17,21 @@ class Chat(object):
         self.uid = "self"
 
 
-        self.current_contact = None
-        self.current_contact_uid = None
+
         self.window.chat_input.returnPressed.connect(self.addMsg)
         self.window.msg_left.setAlignment(QtCore.Qt.AlignLeft)
         self.window.msg_right.setAlignment(QtCore.Qt.AlignRight)
+
+
+        self.current_contact = None
+        self.current_contact_uid = None
+        self.layout_dic = {0: self.window.msg_left, 1: self.window.msg_right}
+
+    def reply(self, uid):
+        username = self.network.getUbu(uid)
+        if uid == self.uid or not username:
+            return
+        self.window.chat_input.setText("@{0} ".format(username))
 
     def getDate(self, d1):
         d1, d2 = datetime.fromtimestamp(timestamp()), datetime.fromtimestamp(d1)
@@ -32,7 +45,9 @@ class Chat(object):
         return "{0} at {1}".format(d, "{0}:{1}".format(d2.hour, d2.minute))
 
 
-    def addMsg(self, msg=None, db=True):
+    def addMsg(self, msg=None, username=None, uid=None, db=True, from_self=True):
+        username = username if username else self.username
+        uid = uid if uid else self.uid
         if not msg:
             msg = self.window.chat_input.text()
             self.window.chat_input.setText("")
@@ -40,13 +55,15 @@ class Chat(object):
         if not msg.strip():
             return
         if db:
+            if len(self.network.data[self.current_contact_uid]["msgs"]) >= MAX_MSG:
+                self.network.data[self.current_contact_uid]["msgs"].clear()
             data = {'author': self.username, 'author_id': self.uid, 'text': msg, 'id': randUid(12), 'date': timestamp()}
             self.network.data[self.current_contact_uid]["msgs"].append(data)
 
-        self.createEmpty(self.window.msg_left)
-        self.createMsg(msg, self.username, int(timestamp()), self.window.msg_right)
+        self.createEmpty(self.layout_dic[not from_self])
+        self.createMsg(msg, username, uid, int(timestamp()), self.layout_dic[from_self])
 
-    def createMsg(self, text, author, date, msg_layout):
+    def createMsg(self, text, author, author_id, date, msg_layout):
 
 
         ## text frame ##
@@ -99,20 +116,23 @@ class Chat(object):
 
         ## set text ##
         browser.setText(text)
-        button.setText("  By {0}    {1}".format(author, self.getDate(date)))
+        button.setText("By {0}    {1}".format(author, self.getDate(date)))
         reply_button.setText("reply")
+        reply_button.clicked.connect(partial(self.reply, author_id))
 
         ## add to layout ##
         layout.addWidget(reply_button)
 
         msg_layout.addWidget(label)
         msg_layout.addWidget(textframe)
+        self.window.scrollArea_3.scroll(50, 50)
+        self.window.scrollArea_3.verticalScrollBar().setValue(self.window.scrollArea_3.verticalScrollBar().maximum())
 
 
 
     def createEmpty(self, layout):
         label = QtWidgets.QLabel(self.window.scrollchat_frame)
-        label.setMinimumSize(250, 125)
+        label.setMinimumSize(300, 150)
         layout.addWidget(label)
 
     def deleteCurrent(self, layout):
@@ -127,7 +147,6 @@ class Chat(object):
 
     def clickedContact(self, contact : typing.Tuple[str, str]):
         uid, name = contact
-        print("clicked ", name)
 
         self.current_contact = name
         self.current_contact_uid = uid
@@ -138,11 +157,11 @@ class Chat(object):
         for msg in self.network.data[uid]["msgs"]:
             self.network.label_added.append(msg["id"])
             if msg["author_id"] == self.uid:
-                self.createMsg(msg["text"], msg["author"], msg["date"], self.window.msg_right)
+                self.createMsg(msg["text"], "{0} ({1})".format(self.username, 'you'), msg["author_id"], msg["date"], self.window.msg_right)
                 self.createEmpty(self.window.msg_left)
 
             else:
-                self.createMsg(msg["text"], msg["author"], msg["date"], self.window.msg_left)
+                self.createMsg(msg["text"], msg["author"], msg["author_id"], msg["date"], self.window.msg_left)
                 self.createEmpty(self.window.msg_right)
 
     def getContactButtons(self, window, widget, contacts):
