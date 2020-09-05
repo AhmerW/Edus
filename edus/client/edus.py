@@ -29,6 +29,7 @@ class MainWindow(QtWidgets.QMainWindow):
             True
         ))
 
+
         self.startWelcome()
         self.bindButtons()
 
@@ -54,8 +55,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def onClick(self, obj, name, special=None):
         if name == 'chat_send':
             self.events.chat.addMsg()
-        if self.button_tabs.get(obj):
+        if name == 'emojize':
+            self.events.chat.emojize()
+        if name.startswith('emoji_dialog'):
+            self.events.chat.dialog_emoji.show()
 
+        if self.button_tabs.get(obj):
             try:
                 tab, text = self.button_tabs[obj]
                 if not tab:

@@ -1,17 +1,29 @@
 from PyQt5 import QtWidgets, QtCore
 from functools import partial
 import typing
+from lib.web.netevent import NetworkEvents
 from lib.caching import CustomCache
 from lib.network import Network
 from lib.chat import Chat
 
+CONNECT = False
+netevent = NetworkEvents('localhost', 8991)
+if CONNECT:
+    netevent.start()
+
 class Events(object):
     def __init__(self, window):
         self.window = window
+        ## objects ##
         self.network = Network(self.window)
         self.chat = Chat(self.window, self.network)
+
         self.classroom_buttons = {}
         self.previous = None
+
+    @netevent.registerEvent('on_message')
+    def on_message(self, msg):
+        print(msg)
 
     def loadClassrooms(self, func=None, search=False):
         if search:
@@ -61,7 +73,7 @@ class Events(object):
                     classroom.cid
                 ))
             #i += 1
-        self.window.gridLayout_17.update()
+        #self.window.gridLayout_17.update()
 
 
     def loadTab(self, tab, name):

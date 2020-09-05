@@ -3,20 +3,20 @@ import os
 import json
 from lib.security.gen import randUid
 
-class Person(object):
-    """Represents a person in Edus."""
+class User(object):
+    """Represents an user in Edus."""
     def __init__(self, uid, name):
         self.uid : int = uid
         self.name : str = name
         self.msgs : list = []
-        self.admin : bool = bool(self.uid)
+        self.admin : bool = False
     def __str__(self):
         return self.name
 
-class Student(Person):
+class Student(User):
     pass
 
-class Teacher(Person):
+class Teacher(User):
     pass
 
 class Classroom(object):
@@ -34,7 +34,7 @@ class Network(object):
         self.data = self.getData('contacts.json')
         for uid, contact in self.data.items():
             self.ubu[uid] = contact["name"]
-            self.contacts.append(Person(uid, contact['name']))
+            self.contacts.append(User(uid, contact['name']))
         self.current_contact = self.contacts[0].uid
 
         self.button_values = {}
@@ -62,7 +62,7 @@ class Network(object):
 
     def createConctact(self, name):
         uid = randUid()
-        contact = Person(uid, name)
+        contact = User(uid, name)
         with open(self.getPath('cache', 'contacts.json'), "w+") as f:
             try:
                 data = json.load(f)

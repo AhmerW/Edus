@@ -4,7 +4,9 @@ from datetime import datetime, date
 from time import time as timestamp
 import threading
 import typing
+import emojis
 from lib.security.gen import randUid
+from gui.dialogs.emoji import EmojiDialog
 
 MAX_MSG = 20
 
@@ -15,6 +17,7 @@ class Chat(object):
         self.frames = {}
         self.username = "guest"
         self.uid = "self"
+        self.dialog_emoji = EmojiDialog(self)
 
 
 
@@ -27,14 +30,20 @@ class Chat(object):
         self.current_contact_uid = None
         self.layout_dic = {0: self.window.msg_left, 1: self.window.msg_right}
 
+
+
+    def addEmoji(self, emoji):
+        self.window.chat_input.setText("{0}{1}".format(self.window.chat_input.text(), emoji))
+
+
     def reply(self, uid):
         username = self.network.getUbu(uid)
         if uid == self.uid or not username:
             return
-        self.window.chat_input.setText("@{0} ".format(username))
+        self.window.chat_input.setText("@{0} {1}".format(username, self.window.chat_input.text()))
 
     def getDate(self, d1):
-        d1, d2 = datetime.fromtimestamp(timestamp()), datetime.fromtimestamp(d1)
+        d1, d2 = datetime.now(), datetime.fromtimestamp(d1)
         dif = d1 - d2
         if dif.days == 0:
             d = "today"
@@ -42,7 +51,9 @@ class Chat(object):
             d = "yesterday"
         else:
             d = "{0} days ago".format(dif.days)
-        return "{0} at {1}".format(d, "{0}:{1}".format(d2.hour, d2.minute))
+        hours = int(dif.total_seconds()/3600)
+        text = "{0}, {1} hour{2} ago".format(d, hours, 's' if hours > 1 else '')
+        return "{0} at {1}".format(text, "{0}:{1}".format(d2.hour, d2.minute))
 
 
     def addMsg(self, msg=None, username=None, uid=None, db=True, from_self=True):
@@ -125,19 +136,21 @@ class Chat(object):
 
         msg_layout.addWidget(label)
         msg_layout.addWidget(textframe)
-        self.window.scrollArea_3.scroll(50, 50)
         self.window.scrollArea_3.verticalScrollBar().setValue(self.window.scrollArea_3.verticalScrollBar().maximum())
 
 
+    def emojize(self):
+        self.window.chat_input.setText(emojis.encode(self.window.chat_input.text()))
 
     def createEmpty(self, layout):
-        label = QtWidgets.QLabel(self.window.scrollchat_frame)
-        label.setMinimumSize(300, 150)
+        label = QtWidgets.QLabel(self.window.scrollAreaWidgetContents_3)
+        label.setMinimumSize(330, 180)
         layout.addWidget(label)
 
     def deleteCurrent(self, layout):
         for i in reversed(range(layout.count())):
             layout.itemAt(i).widget().setParent(None)
+
 
     def getLayouts(self, uid):
         if uid in self.frames:
@@ -147,7 +160,7 @@ class Chat(object):
 
     def clickedContact(self, contact : typing.Tuple[str, str]):
         uid, name = contact
-
+        self.window.chat_input.setPlaceholderText("Send a message to {0}".format(name))
         self.current_contact = name
         self.current_contact_uid = uid
 
@@ -171,3 +184,4 @@ class Chat(object):
             b.setText(contact.name)
             b.clicked.connect(partial(self.clickedContact, (contact.uid, contact.name)))
             self.network.button_values[contact.uid] = b
+        widget.addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
