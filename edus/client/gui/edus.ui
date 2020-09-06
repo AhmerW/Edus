@@ -1035,8 +1035,8 @@ border: 1px solid #007a78;</string>
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1271</width>
-                <height>650</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_17"/>
@@ -1441,6 +1441,38 @@ border: 1px solid #007a78;</string>
          <property name="icon">
           <iconset>
            <normaloff>assets/icons/notification.png</normaloff>assets/icons/notification.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="button_chat">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Chat</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/icons/chat.png</normaloff>assets/icons/chat.png</iconset>
          </property>
          <property name="iconSize">
           <size>

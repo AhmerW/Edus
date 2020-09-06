@@ -4,12 +4,15 @@ import threading
 from time import sleep
 from contextlib import closing
 from handler import EventHandler
+from api.main import MainApi
 
 class Gateway(object):
     def __init__(self, loop, host = 'localhost', port = 8991):
         self.loop, self.host, self.port = loop, host, port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.api = MainApi(self)
 
+        self.data = {}
         self.event_servers = {}
         self.listen_servers = {}
         self.started = False
@@ -23,7 +26,7 @@ class Gateway(object):
 
     async def spawnEventServer(self, amount=1):
         for _ in range(amount):
-            self.event_servers[EventHandler()] = 0
+            self.event_servers[EventHandler(self.data)] = 0
 
     async def getServer(self, servers):
         return min(servers, key = lambda i : servers[i])

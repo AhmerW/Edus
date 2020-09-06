@@ -11,9 +11,11 @@ from gui.dialogs.emoji import EmojiDialog
 MAX_MSG = 20
 
 class Chat(object):
-    def __init__(self, window, network):
+    def __init__(self, window, network, apic, loop):
         self.window = window
         self.network = network
+        self.apic = apic
+        self.loop = loop
         self.frames = {}
         self.username = "guest"
         self.uid = "self"
@@ -52,7 +54,11 @@ class Chat(object):
         else:
             d = "{0} days ago".format(dif.days)
         hours = int(dif.total_seconds()/3600)
-        text = "{0}, {1} hour{2} ago".format(d, hours, 's' if hours > 1 else '')
+        _type = 'hours'
+        if hours == 0:
+            _type = 'minutes'
+            hours = int(hours*60)
+        text = "{0} {1}{2} ago".format(hours, _type, 's' if hours == 1 else '')
         return "{0} at {1}".format(text, "{0}:{1}".format(d2.hour, d2.minute))
 
 
@@ -70,6 +76,10 @@ class Chat(object):
                 self.network.data[self.current_contact_uid]["msgs"].clear()
             data = {'author': self.username, 'author_id': self.uid, 'text': msg, 'id': randUid(12), 'date': timestamp()}
             self.network.data[self.current_contact_uid]["msgs"].append(data)
+
+            res = self.loop.run_until_complete(self.apic.sendMessage(
+                msg, self.uid, self.username, self.current_contact_uid
+            ))
 
         self.createEmpty(self.layout_dic[not from_self])
         self.createMsg(msg, username, uid, int(timestamp()), self.layout_dic[from_self])

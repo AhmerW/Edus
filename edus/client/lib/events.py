@@ -1,22 +1,28 @@
 from PyQt5 import QtWidgets, QtCore
 from functools import partial
+import asyncio
 import typing
 from lib.web.netevent import NetworkEvents
 from lib.caching import CustomCache
 from lib.network import Network
+from lib.web.apic import Calls
 from lib.chat import Chat
 
-CONNECT = False
+
+loop = asyncio.get_event_loop()
+
+_con = False
 netevent = NetworkEvents('localhost', 8991)
-if CONNECT:
+if _con:
     netevent.start()
 
 class Events(object):
     def __init__(self, window):
         self.window = window
         ## objects ##
+        self.apic = Calls()
         self.network = Network(self.window)
-        self.chat = Chat(self.window, self.network)
+        self.chat = Chat(self.window, self.network, self.apic,loop)
 
         self.classroom_buttons = {}
         self.previous = None
