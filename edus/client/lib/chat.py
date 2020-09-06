@@ -6,7 +6,7 @@ import threading
 import typing
 import emojis
 from lib.security.gen import randUid
-from gui.dialogs.emoji import EmojiDialog
+from gui.dialogs.emoji.emoji import EmojiDialog
 
 MAX_MSG = 20
 
@@ -65,6 +65,7 @@ class Chat(object):
     def addMsg(self, msg=None, username=None, uid=None, db=True, from_self=True):
         username = username if username else self.username
         uid = uid if uid else self.uid
+        error = False
         if not msg:
             msg = self.window.chat_input.text()
             self.window.chat_input.setText("")
@@ -77,23 +78,27 @@ class Chat(object):
             data = {'author': self.username, 'author_id': self.uid, 'text': msg, 'id': randUid(12), 'date': timestamp()}
             self.network.data[self.current_contact_uid]["msgs"].append(data)
 
-            res = self.loop.run_until_complete(self.apic.sendMessage(
+        if from_self:
+            self.loop.run_until_complete(self.apic.sendMessage(
                 msg, self.uid, self.username, self.current_contact_uid
             ))
+            if not self.apic.latest:
+                error = True
 
         self.createEmpty(self.layout_dic[not from_self])
-        self.createMsg(msg, username, uid, int(timestamp()), self.layout_dic[from_self])
+        self.createMsg(msg, username, uid, int(timestamp()), self.layout_dic[from_self], error)
 
-    def createMsg(self, text, author, author_id, date, msg_layout):
+    def createMsg(self, text, author, author_id, date, msg_layout, error=False):
 
 
         ## text frame ##
         textframe = QtWidgets.QFrame(self.window.scrollAreaWidgetContents_3)
         textframe.setMaximumSize(QtCore.QSize(300, 150))
-        textframe.setStyleSheet("background-color: #009c99")
+        textframe.setStyleSheet("background-color: {0}".format('#009c99;' if not error else '#49676b;'))
         textframe.setFrameShape(QtWidgets.QFrame.StyledPanel)
         textframe.setFrameShadow(QtWidgets.QFrame.Raised)
         textframe.setObjectName("textframe")
+
 
         layout = QtWidgets.QVBoxLayout(textframe)
         layout.setObjectName("verticalLayout_10")
@@ -136,10 +141,22 @@ class Chat(object):
         label.setMinimumSize(30, 30)
 
         ## set text ##
-        browser.setText(text)
-        button.setText("By {0}    {1}".format(author, self.getDate(date)))
-        reply_button.setText("reply")
-        reply_button.clicked.connect(partial(self.reply, author_id))
+
+        browser.setText(text) # use h tag
+        b_text = "Not sent" if error else "By {0} - {1}".format(author, self.getDate(date))
+        button.setText(b_text)
+        reply_button.setText("reply" if not error else "retry")
+        if error:
+            reply_button.clicked.connect(partial(
+                self.addMsg,
+                text,
+                author,
+                author_id,
+                False,
+                True
+            ))
+        else:
+            reply_button.clicked.connect(partial(self.reply, author_id))
 
         ## add to layout ##
         layout.addWidget(reply_button)

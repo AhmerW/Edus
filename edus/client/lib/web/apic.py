@@ -9,6 +9,10 @@ class Calls(object):
     def __init__(self):
         self.session = aiohttp.ClientSession()
         self.url = '{0}:{1}/api/{2}/'.format(API_IP, API_PORT, API_VERSION)
+        self.latest = 1
+
+
+
     async def getUrl(self, *urls):
         return "{0}{1}".format(self.url, '/'.join(urls))+"/"
 
@@ -21,7 +25,7 @@ class Calls(object):
         }
         try:
             async with self.session.post(await self.getUrl('messages','add'), json=payload) as resp:
+                self.latest = True
                 return await resp.json()
         except Exception as e:
-            print(e)
-            
+            self.latest = False

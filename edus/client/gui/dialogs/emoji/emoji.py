@@ -15,14 +15,14 @@ class EmojiDialog(QtWidgets.QDialog):
     def __init__(self, window):
         super(EmojiDialog, self).__init__()
         self.window = window
-        uic.loadUi(os.path.join(os.path.abspath('gui'), 'dialogs', 'emoji.ui'), self)
+        uic.loadUi(os.path.join(os.path.abspath('gui'), 'dialogs', 'emoji', 'emoji.ui'), self)
 
         self.line_max = 5
 
         ## emoji db ##
         self.recent  = []
         self.emoji_db = {}
-        
+
         for catg in emojis.db.get_categories():
             self.emoji_db[catg] = [emoji.emoji for emoji in emojis.db.get_emojis_by_category(catg)]
         self.loadEmojis()

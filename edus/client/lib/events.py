@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, QtCore
 from functools import partial
 import asyncio
 import typing
+from gui.dialogs.login.login import LoginDialog
 from lib.web.netevent import NetworkEvents
 from lib.caching import CustomCache
 from lib.network import Network
@@ -22,10 +23,18 @@ class Events(object):
         ## objects ##
         self.apic = Calls()
         self.network = Network(self.window)
-        self.chat = Chat(self.window, self.network, self.apic,loop)
+        self.chat = Chat(self.window, self.network, self.apic, loop)
+        self.login = LoginDialog()
 
         self.classroom_buttons = {}
         self.previous = None
+        self.commands = {
+            'button_login': self.login.show,
+            'emoji_dialog': self.chat.dialog_emoji.show,
+            'chat_send': self.chat.addMsg,
+            'emojize': self.chat.emojize
+        }
+
 
     @netevent.registerEvent('on_message')
     def on_message(self, msg):
@@ -96,3 +105,8 @@ class Events(object):
             self.previous = self.network.contacts
             self.network.button_values[self.network.current_contact].click()
         return tab
+
+    def processOther(self, name, other=None):
+        command = self.commands.get(name)
+        if callable(command):
+            command()

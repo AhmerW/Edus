@@ -8,11 +8,14 @@ VERSION = 'v1'
 MAIN_ROUTE = '/api/{0}/'.format(VERSION)
 
 ROUTES = [
-    '{0}messages/add/'.format(MAIN_ROUTE)
+    '{0}messages/add/'
+    '{0}login/',
+    '{0}register/'
 ]
+ROUTES = [route.format(MAIN_ROUTE) for route in ROUTES]
 
 server = None
-print(ROUTES[0])
+
 
 @app.route(MAIN_ROUTE, methods=["POST"])
 async def home(request):
@@ -28,9 +31,18 @@ async def messageAdd(request):
     server.data[data['uid']].append(data)
     return json({"status": 200})
 
+
+@app.route(ROUTES[1])
+async def login(request):
+    username, password = str(request.json.get('username')), str(request.json.get('password'))
+    if not username.strip() or not password.strip():
+        return json({"status": 404})
+
+
 @app.exception(NotFound)
 async def NotFoundException(request, exception):
     return text("Could not find the page matching your requirements.", status=500)
+
 
 class MainApi(object):
     def __init__(self, _server):

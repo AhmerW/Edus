@@ -53,13 +53,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 )
 
     def onClick(self, obj, name, special=None):
-        if name == 'chat_send':
-            self.events.chat.addMsg()
-        if name == 'emojize':
-            self.events.chat.emojize()
-        if name.startswith('emoji_dialog'):
-            self.events.chat.dialog_emoji.show()
-
         if self.button_tabs.get(obj):
             try:
                 tab, text = self.button_tabs[obj]
@@ -75,7 +68,8 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.tabWidget.insertTab(0, tab, text)
             except AttributeError:
                 return
-
+        else:
+            self.events.processOther(name, special)
 
 
     def mousePressEvent(self, event):
