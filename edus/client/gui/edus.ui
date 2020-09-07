@@ -583,6 +583,25 @@ QHorizontalLine{
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="2" rowspan="8">
      <widget class="QTabWidget" name="tabWidget">
+      <property name="styleSheet">
+       <string notr="true">QTabWidget::pane {
+    border-top: 2px solid #C2C7CB;
+}
+QTabWidget::tab-bar {
+    left: 0px;
+}
+
+QTabBar::tab {
+    border: 2px solid #C4C4C3;
+    border-bottom-color: #C2C7CB; 
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    min-width: 8ex;
+    padding: 2px;
+	height: 40px;
+	width: 100px;
+}</string>
+      </property>
       <property name="currentIndex">
        <number>3</number>
       </property>
@@ -703,7 +722,7 @@ Edus is a high quality software made for students of all age.
                    <x>0</x>
                    <y>0</y>
                    <width>996</width>
-                   <height>621</height>
+                   <height>607</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_16">
@@ -944,7 +963,7 @@ border: 1px solid #007a78;</string>
                 <x>0</x>
                 <y>0</y>
                 <width>198</width>
-                <height>700</height>
+                <height>686</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1035,8 +1054,8 @@ border: 1px solid #007a78;</string>
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>98</width>
-                <height>28</height>
+                <width>1271</width>
+                <height>636</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_17"/>
@@ -1122,6 +1141,9 @@ border: 1px solid #007a78;</string>
                  <property name="styleSheet">
                   <string notr="true">background-color: white</string>
                  </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
                  <property name="verticalScrollBarPolicy">
                   <enum>Qt::ScrollBarAlwaysOn</enum>
                  </property>
@@ -1134,7 +1156,7 @@ border: 1px solid #007a78;</string>
                     <x>0</x>
                     <y>0</y>
                     <width>1068</width>
-                    <height>542</height>
+                    <height>494</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_9"/>
@@ -1420,6 +1442,12 @@ border: 1px solid #007a78;</string>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QToolButton" name="button_activity">
@@ -1434,6 +1462,9 @@ border: 1px solid #007a78;</string>
            <width>100</width>
            <height>100</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Activity</string>

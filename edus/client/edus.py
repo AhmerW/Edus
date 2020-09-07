@@ -22,6 +22,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.button_activity: (self.tab_activity, "Activity"),
             'classroom_button': (self.tab_classroom_chat, "Classroom Chat")
         }
+        self.cbut = None
         ## call functions ##
         self.classroom_search_button.clicked.connect(partial(
             self.events.loadClassrooms,
@@ -58,7 +59,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 tab, text = self.button_tabs[obj]
                 if not tab:
                     return
-
+                if isinstance(obj, QtWidgets.QToolButton):
+                    if self.cbut:
+                        self.cbut.setStyleSheet("")
+                    self.cbut = obj
+                    obj.setStyleSheet("border-left: 5px solid aqua;")
                 tab = self.events.loadTab(tab, text.lower())
                 if tab == self.tab_classrooms:
                     self.events.loadClassrooms(self.onClick)

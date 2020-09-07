@@ -1,4 +1,5 @@
 import ssl
+import asyncio
 from sanic import Sanic
 from sanic.response import json, text
 from sanic.exceptions import ServerError, abort, NotFound
@@ -16,6 +17,9 @@ ROUTES = [route.format(MAIN_ROUTE) for route in ROUTES]
 
 server = None
 
+async def verifyToken(token):
+    return False
+
 
 @app.route(MAIN_ROUTE, methods=["POST"])
 async def home(request):
@@ -26,9 +30,10 @@ async def messageAdd(request):
     data = request.json
     if not server:
         raise ServerError("Server offline", status_code=500)
+    if not await verifyToken(data.get('token')):
+        return json({"status": 404, "error": "Not authorized"})
     if not server.data.get(data['uid']):
-        server.data[data['uid']] = []
-    server.data[data['uid']].append(data)
+        return json({"status": 404, "error": "Not authorized"})
     return json({"status": 200})
 
 
@@ -49,9 +54,13 @@ class MainApi(object):
         global server
         server = _server
 
-    def start(self, *args, **kwargs) -> None:
+    async def validateToken(self):
+        pass
+
+    async def start(self, *args, **kwargs) -> None:
         app.run(*args, **kwargs)
 
 if __name__ == '__main__':
     api = MainApi(None)
-    api.start('localhost', 8989)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(api.start('localhost', 8989))
