@@ -1,5 +1,6 @@
 import ssl
 import asyncio
+import threading
 from sanic import Sanic
 from sanic.response import json, text
 from sanic.exceptions import ServerError, abort, NotFound
@@ -9,13 +10,14 @@ VERSION = 'v1'
 MAIN_ROUTE = '/api/{0}/'.format(VERSION)
 
 ROUTES = [
-    '{0}messages/add/'
-    '{0}login/',
-    '{0}register/'
+    '{0}messages/add/'.format(MAIN_ROUTE),
+    '{0}login/'.format(MAIN_ROUTE),
+    '{0}register/'.format(MAIN_ROUTE)
 ]
-ROUTES = [route.format(MAIN_ROUTE) for route in ROUTES]
+
 
 server = None
+print(ROUTES)
 
 async def verifyToken(token):
     return False
@@ -37,30 +39,33 @@ async def messageAdd(request):
     return json({"status": 200})
 
 
-@app.route(ROUTES[1])
+@app.route(ROUTES[1], methods=["POST"])
 async def login(request):
-    username, password = str(request.json.get('username')), str(request.json.get('password'))
+    username, password = str(request.form.get('username')), str(request.form.get('password'))
+    print("req")
     if not username.strip() or not password.strip():
         return json({"status": 404})
+    return json({"status": await server.auth.verifyLogin(username, password)})
 
+
+@app.route(ROUTES[2])
+async def register(request):
+      return json({
+        "status": await server.auth.register(
+            request.form.get('username'),
+            request.form.get('password')
+        )
+      })
 
 @app.exception(NotFound)
 async def NotFoundException(request, exception):
     return text("Could not find the page matching your requirements.", status=500)
 
 
-class MainApi(object):
-    def __init__(self, _server):
-        global server
-        server = _server
 
-    async def validateToken(self):
-        pass
+async def run(*args, **kwargs) -> None:
+    app.run(*args, **kwargs)
 
-    async def start(self, *args, **kwargs) -> None:
-        app.run(*args, **kwargs)
 
-if __name__ == '__main__':
-    api = MainApi(None)
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(api.start('localhost', 8989))
+if __name__ == "__main__":
+    app.run('localhost', 8989)

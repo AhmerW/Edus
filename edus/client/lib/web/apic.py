@@ -10,11 +10,25 @@ class Calls(object):
         self.session = aiohttp.ClientSession()
         self.url = '{0}:{1}/api/{2}/'.format(API_IP, API_PORT, API_VERSION)
         self.latest = 1
+        self.latest_login = None
 
 
 
     async def getUrl(self, *urls):
         return "{0}{1}".format(self.url, '/'.join(urls))+"/"
+
+    async def login(self, username, password):
+        data = await self.basic('login', {"username": username, "password": password})
+        print("got ", data)
+        self.latest_login =  data
+        return data
+
+    async def register(self, username, password):
+        return await self.basic('register', {"username": username, "password": password})
+
+    async def basic(self, url, data):
+        async with self.session.post(await self.getUrl(url), data=data) as resp:
+            return await resp.json()
 
     async def sendMessage(self, msg, uid, name, tid):
         payload = {

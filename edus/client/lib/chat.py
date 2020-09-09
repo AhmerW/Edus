@@ -46,20 +46,15 @@ class Chat(object):
 
     def getDate(self, d1):
         d1, d2 = datetime.now(), datetime.fromtimestamp(d1)
-        dif = d1 - d2
-        if dif.days == 0:
+        days = d1.day - d2.day
+        time = d2.strftime("%H:%M")
+        if days == 0:
             d = "today"
-        elif dif.days == -1:
+        elif days == -1:
             d = "yesterday"
         else:
-            d = "{0} days ago".format(dif.days)
-        hours = int(dif.total_seconds()/3600)
-        _type = 'hours'
-        if hours == 0:
-            _type = 'minutes'
-            hours = int(hours*60)
-        text = "{0} {1}{2} ago".format(hours, _type, 's' if hours == 1 else '')
-        return "{0} at {1}".format(text, "{0}:{1}".format(d2.hour, d2.minute))
+            d = "{0} days ago".format(days)
+        return "{0} at {1}".format(d, time)
 
 
     def addMsg(self, msg=None, username=None, uid=None, db=True, from_self=True):

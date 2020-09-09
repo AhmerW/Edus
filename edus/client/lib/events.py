@@ -24,7 +24,7 @@ class Events(object):
         self.apic = Calls()
         self.network = Network(self.window)
         self.chat = Chat(self.window, self.network, self.apic, loop)
-        self.login = LoginDialog()
+        self.login = LoginDialog(self.apic)
 
         self.classroom_buttons = {}
         self.previous = None

@@ -4,13 +4,27 @@ import threading
 from time import sleep
 from contextlib import closing
 from handler import EventHandler
-from api.main import MainApi
+from api import main as api
+
+
+class Auth(object):
+    def __init__(self):
+        self.db = {}
+
+    async def verifyLogin(self, username, password):
+        return self.db.get(username) == password
+
+    async def register(self, username, password):
+        if self.db.get(username):
+            return False
+        self.db[username] = password
+        return True
 
 class Gateway(object):
     def __init__(self, loop, host = 'localhost', port = 8991):
         self.loop, self.host, self.port = loop, host, port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.api = MainApi(self)
+        self.auth = Auth()
 
         self.data = {}
         self.event_servers = {}
@@ -42,11 +56,11 @@ class Gateway(object):
             if await self.checkSocket(self.sock, self.host, self.port):
                 self.started = True
                 break
-            print("failed")
             sleep(2)
             self.port += 1
-        self.sock.listen()
         await self.spawnEventServer(2)
+        await self.loop.create_task(api.create_server('localhost', 8989))
+        self.sock.listen()
         print("server listening")
         while self.started:
             c, _ = self.sock.accept()
