@@ -4,6 +4,7 @@ import threading
 from sanic import Sanic
 from sanic.response import json, text
 from sanic.exceptions import ServerError, abort, NotFound
+from gateway import Gateway
 
 app = Sanic(__name__)
 VERSION = 'v1'
@@ -16,11 +17,17 @@ ROUTES = [
 ]
 
 
-server = None
-print(ROUTES)
+server = Gateway()
 
 async def verifyToken(token):
     return False
+
+def func():
+    print("hi")
+
+@app.listener('before_server_start')
+async def before(sanic, loop):
+    await server.run()
 
 
 @app.route(MAIN_ROUTE, methods=["POST"])
@@ -29,7 +36,7 @@ async def home(request):
 
 @app.route(ROUTES[0], methods=["POST"])
 async def messageAdd(request):
-    data = request.json
+    data = request.form
     if not server:
         raise ServerError("Server offline", status_code=500)
     if not await verifyToken(data.get('token')):
@@ -63,9 +70,10 @@ async def NotFoundException(request, exception):
 
 
 
-async def run(*args, **kwargs) -> None:
+def run(*args, **kwargs) -> None:
     app.run(*args, **kwargs)
 
 
 if __name__ == "__main__":
-    app.run('localhost', 8989)
+    loop = asyncio.get_event_loop()
+    app.run('localhost', 8989, debug=True)

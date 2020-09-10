@@ -18,17 +18,20 @@ class Calls(object):
         return "{0}{1}".format(self.url, '/'.join(urls))+"/"
 
     async def login(self, username, password):
-        data = await self.basic('login', {"username": username, "password": password})
-        print("got ", data)
+        data = await self.basic({"username": username, "password": password}, 'login
         self.latest_login =  data
         return data
 
     async def register(self, username, password):
-        return await self.basic('register', {"username": username, "password": password})
+        return await self.basic({"username": username, "password": password}, 'register')
 
-    async def basic(self, url, data):
-        async with self.session.post(await self.getUrl(url), data=data) as resp:
-            return await resp.json()
+    async def basic(self, data, *urls):
+        try:
+            async with self.session.post(await self.getUrl(*urls), data=data) as resp:
+                return await resp.json()
+        except Exception as e:
+            print("ex ", e)
+            return {}
 
     async def sendMessage(self, msg, uid, name, tid):
         payload = {
@@ -38,8 +41,6 @@ class Calls(object):
             'target': tid # target id
         }
         try:
-            async with self.session.post(await self.getUrl('messages','add'), json=payload) as resp:
-                self.latest = True
-                return await resp.json()
+            return await self.basic(payload, 'messages','add')
         except Exception as e:
             self.latest = False

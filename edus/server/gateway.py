@@ -4,7 +4,7 @@ import threading
 from time import sleep
 from contextlib import closing
 from handler import EventHandler
-from api import main as api
+
 
 
 class Auth(object):
@@ -20,12 +20,14 @@ class Auth(object):
         self.db[username] = password
         return True
 
-class Gateway(object):
-    def __init__(self, loop, host = 'localhost', port = 8991):
-        self.loop, self.host, self.port = loop, host, port
+class Gateway():
+    def __init__(self, host = 'localhost', port = 8991):
+        self.host, self.port = host, port
+        self.loop = asyncio.get_event_loop()
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.auth = Auth()
 
+        self.tasks = []
         self.data = {}
         self.event_servers = {}
         self.listen_servers = {}
@@ -48,9 +50,18 @@ class Gateway(object):
     async def handle(self, c):
         server = await self.getServer(self.event_servers)
         self.event_servers[server] += 1
-        await self.loop.create_task(server.handle(c))
+        tasks = [await self.loop.create_task(server.handle(c))]
+        if tasks:
+            await asyncio.wait(*tasks)
 
-    async def start(self):
+
+    def actual(self):
+        print("server listening")
+        while self.started:
+            c, _ = self.sock.accept()
+            self.loop.run_until_complete(self.handle(c))
+
+    async def run(self):
 
         while not self.started:
             if await self.checkSocket(self.sock, self.host, self.port):
@@ -59,15 +70,12 @@ class Gateway(object):
             sleep(2)
             self.port += 1
         await self.spawnEventServer(2)
-        await self.loop.create_task(api.create_server('localhost', 8989))
         self.sock.listen()
-        print("server listening")
-        while self.started:
-            c, _ = self.sock.accept()
-            await self.handle(c)
+        threading.Thread(target=self.actual).start()
+
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     gateway = Gateway(loop)
 
-    loop.run_until_complete(gateway.start())
+    loop.create_task(gateway.start())

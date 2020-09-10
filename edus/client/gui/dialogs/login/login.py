@@ -16,4 +16,4 @@ class LoginDialog(QtWidgets.QDialog):
             self.email.text(),
             self.password.text()
         ))
-        print(self.api.latest_login, r)
+        print("results: ", r)

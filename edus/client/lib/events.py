@@ -12,7 +12,7 @@ from lib.chat import Chat
 
 loop = asyncio.get_event_loop()
 
-_con = False
+_con = 1
 netevent = NetworkEvents('localhost', 8991)
 if _con:
     netevent.start()
