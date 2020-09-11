@@ -33,6 +33,7 @@ class LoginDialog(QtWidgets.QDialog):
             'login'
         ))
         if r.get('status'):
+            self.logged_in = True
             status = "Login successfull!"
             self.event.netevent = NetworkEvents('localhost', 8989, r.get('uid'))
             self.event.registerEvents()

@@ -18,7 +18,6 @@ class Auth(object):
 
 
     async def verifyLogin(self, data):
-        print(data)
         email, password = data.get('email'), data.get('password')
         uid = self.userdb.get(email)
         if not email or not password or not uid:

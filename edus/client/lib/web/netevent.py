@@ -9,7 +9,7 @@ from time import sleep
 class NetworkEvents(threading.Thread):
     def __init__(self, ip, port, uid):
         super(NetworkEvents, self).__init__()
-        self.ip, self.port, uid = ip, port, uid
+        self.ip, self.port, self.uid = ip, port, uid
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connected = False
 
@@ -44,6 +44,7 @@ class NetworkEvents(threading.Thread):
             if not self.connect():
                 sleep(2)
         print("connected")
+        self.sock.send(self.uid.encode('utf-8'))
         while self.connected:
             try:
                 event = self.sock.recv(2080).decode() # event:data
