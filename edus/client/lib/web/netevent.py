@@ -7,9 +7,9 @@ from time import sleep
 
 
 class NetworkEvents(threading.Thread):
-    def __init__(self, ip, port):
+    def __init__(self, ip, port, uid):
         super(NetworkEvents, self).__init__()
-        self.ip, self.port = ip, port
+        self.ip, self.port, uid = ip, port, uid
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connected = False
 
@@ -17,6 +17,8 @@ class NetworkEvents(threading.Thread):
             "on_friend_request": None,
             "on_message": None
         }
+
+
 
     def registerEvent(self, event):
         def inner(func):
@@ -43,10 +45,13 @@ class NetworkEvents(threading.Thread):
                 sleep(2)
         print("connected")
         while self.connected:
-            event = self.sock.recv(2080).decode() # event:data
-            if not ':' in event:
-                continue
-            event, data = event.split(':')
-            func = events.get(event)
-            if callable(func):
-                func(data)
+            try:
+                event = self.sock.recv(2080).decode() # event:data
+                if not ':' in event:
+                    continue
+                event, data = event.split(':')
+                func = events.get(event)
+                if callable(func):
+                    func(data)
+            except ConnectionAbortedError:
+                break

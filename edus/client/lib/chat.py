@@ -47,23 +47,24 @@ class Chat(object):
     def getDate(self, d1):
         d1, d2 = datetime.now(), datetime.fromtimestamp(d1)
         days = d1.day - d2.day
-        time = d2.strftime("%H:%M")
+
         if days == 0:
             d = "today"
         elif days == -1:
             d = "yesterday"
         else:
             d = "{0} days ago".format(days)
-        return "{0} at {1}".format(d, time)
+        return "{0} at {1}".format(d, d2.strftime("%H:%M"))
 
 
-    def addMsg(self, msg=None, username=None, uid=None, db=True, from_self=True):
+    def addMsg(self, msg=None, username=None, uid=None, db=True, from_self=False):
         username = username if username else self.username
         uid = uid if uid else self.uid
         error = False
         if not msg:
             msg = self.window.chat_input.text()
             self.window.chat_input.setText("")
+            from_self = True
 
         if not msg.strip():
             return
@@ -81,15 +82,37 @@ class Chat(object):
                 error = True
 
         self.createEmpty(self.layout_dic[not from_self])
-        self.createMsg(msg, username, uid, int(timestamp()), self.layout_dic[from_self], error)
+        self.createMsg(msg, username, uid, int(timestamp()), self.layout_dic[from_self], error, from_self=from_self)
 
-    def createMsg(self, text, author, author_id, date, msg_layout, error=False):
+    def createMsg(
+        self,
+        text,
+        author,
+        author_id,
+        date,
+        msg_layout,
+        post = False,
+        error=False,
+        from_self=False,
+        auto_empty = False
+    ):
 
 
         ## text frame ##
         textframe = QtWidgets.QFrame(self.window.scrollAreaWidgetContents_3)
-        textframe.setMaximumSize(QtCore.QSize(300, 150))
-        textframe.setStyleSheet("background-color: {0}".format('#009c99;' if not error else '#49676b;'))
+        _len = len(text)
+        _len = _len*_len
+        _height = 100
+
+        if _len < 100:
+            _len = 150
+        if _len > 300:
+            _len = 300
+            _height += 50
+        textframe.setMaximumSize(QtCore.QSize(_len, _height))
+
+        ##009c99
+        textframe.setStyleSheet("background-color: {0}".format('#f0eee9;' if not from_self else '#48c3d9;'))
         textframe.setFrameShape(QtWidgets.QFrame.StyledPanel)
         textframe.setFrameShadow(QtWidgets.QFrame.Raised)
         textframe.setObjectName("textframe")
@@ -105,58 +128,27 @@ class Chat(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(button.sizePolicy().hasHeightForWidth())
         button.setSizePolicy(sizePolicy)
-        button.setStyleSheet("border: 1px solid #009c99")
+        button.setStyleSheet("border: 0px solid {0}".format('#f0eee9;' if not from_self else '#48c3d9;'))
         button.setObjectName("toolButton")
         layout.addWidget(button)
 
         ## text browser ##
         browser = QtWidgets.QTextBrowser(textframe)
+        browser.setMaximumSize(300, 150)
         browser.setObjectName("textBrowser")
         layout.addWidget(browser)
 
-        ## reply button ##
-        reply_button = QtWidgets.QToolButton(textframe)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(reply_button.sizePolicy().hasHeightForWidth())
-        reply_button.setSizePolicy(sizePolicy)
-        reply_button.setMaximumSize(QtCore.QSize(16777215, 20))
-        reply_button.setLayoutDirection(QtCore.Qt.LeftToRight)
-        reply_button.setStyleSheet("background-color: #007a78; border: 1px solid #007a78;")
 
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("assets/icons/reply.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-
-        reply_button.setIcon(icon)
-        reply_button.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
-
-        ## label ##
-        label = QtWidgets.QLabel(self.window.scrollAreaWidgetContents_3)
-        label.setMinimumSize(30, 30)
 
         ## set text ##
 
-        browser.setText(text) # use h tag
-        b_text = "Not sent" if error else "By {0} - {1}".format(author, self.getDate(date))
+        browser.setText("<p>{0}</p>".format(text)) # use h tag
+        b_text = "{0} {1}".format('' if from_self else "{0} - ".format(author), self.getDate(date))
         button.setText(b_text)
-        reply_button.setText("reply" if not error else "retry")
-        if error:
-            reply_button.clicked.connect(partial(
-                self.addMsg,
-                text,
-                author,
-                author_id,
-                False,
-                True
-            ))
-        else:
-            reply_button.clicked.connect(partial(self.reply, author_id))
 
         ## add to layout ##
-        layout.addWidget(reply_button)
-
-        msg_layout.addWidget(label)
+        if auto_empty:
+            self.createEmpty(auto_empty, _len, _height)
         msg_layout.addWidget(textframe)
         self.window.scrollArea_3.verticalScrollBar().setValue(self.window.scrollArea_3.verticalScrollBar().maximum())
 
@@ -164,9 +156,9 @@ class Chat(object):
     def emojize(self):
         self.window.chat_input.setText(emojis.encode(self.window.chat_input.text()))
 
-    def createEmpty(self, layout):
+    def createEmpty(self, layout, w=310, h=160):
         label = QtWidgets.QLabel(self.window.scrollAreaWidgetContents_3)
-        label.setMinimumSize(330, 180)
+        label.setMinimumSize(w, h)
         layout.addWidget(label)
 
     def deleteCurrent(self, layout):
@@ -192,12 +184,27 @@ class Chat(object):
         for msg in self.network.data[uid]["msgs"]:
             self.network.label_added.append(msg["id"])
             if msg["author_id"] == self.uid:
-                self.createMsg(msg["text"], "{0} ({1})".format(self.username, 'you'), msg["author_id"], msg["date"], self.window.msg_right)
-                self.createEmpty(self.window.msg_left)
+                self.createMsg(
+                    msg["text"],
+                    "{0} ({1})".format(self.username, 'you'),
+                    msg["author_id"],
+                    msg["date"],
+                    self.window.msg_right,
+                    from_self=True,
+                    auto_empty=self.window.msg_left
+                )
+
 
             else:
-                self.createMsg(msg["text"], msg["author"], msg["author_id"], msg["date"], self.window.msg_left)
-                self.createEmpty(self.window.msg_right)
+                self.createMsg(
+                        msg["text"],
+                        msg["author"],
+                        msg["author_id"],
+                        msg["date"],
+                        self.window.msg_left,
+                        auto_empty=self.window.msg_right
+                    )
+
 
     def getContactButtons(self, window, widget, contacts):
         for contact in contacts:

@@ -34,7 +34,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.startWelcome()
         self.bindButtons()
 
-
+    def closeEvent(self, event):
+        if hasattr(self.events.netevent, 'sock'):
+            self.events.netevent.sock.close()
+        event.accept()
 
     def startWelcome(self):
         for _ in range(len(self.button_tabs)-1):

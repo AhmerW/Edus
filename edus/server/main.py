@@ -48,21 +48,12 @@ async def messageAdd(request):
 
 @app.route(ROUTES[1], methods=["POST"])
 async def login(request):
-    username, password = str(request.form.get('username')), str(request.form.get('password'))
-    print("req")
-    if not username.strip() or not password.strip():
-        return json({"status": 404})
-    return json({"status": await server.auth.verifyLogin(username, password)})
+    return json(await server.auth.verifyLogin(request.form))
 
 
-@app.route(ROUTES[2])
+@app.route(ROUTES[2], methods=["POST"])
 async def register(request):
-      return json({
-        "status": await server.auth.register(
-            request.form.get('username'),
-            request.form.get('password')
-        )
-      })
+    return json(await server.auth.register(request.form))
 
 @app.exception(NotFound)
 async def NotFoundException(request, exception):
@@ -70,8 +61,6 @@ async def NotFoundException(request, exception):
 
 
 
-def run(*args, **kwargs) -> None:
-    app.run(*args, **kwargs)
 
 
 if __name__ == "__main__":

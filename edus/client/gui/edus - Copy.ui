@@ -581,330 +581,29 @@ QHorizontalLine{
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="3" column="0">
-     <widget class="QFrame" name="frame">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>800</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QToolButton" name="button_name">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Name</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>assets/default.png</normaloff>assets/default.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>50</width>
-          <height>50</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>false</bool>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>false</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="1">
-     <layout class="QVBoxLayout" name="verticalLayout_4">
-      <item>
-       <widget class="QPushButton" name="button_login">
-        <property name="styleSheet">
-         <string notr="true">QPushButton:hover{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(197, 197, 197), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(197, 197, 197));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
-	border-width: 1px;
-	border-radius: 5px;
-	color: rgb(0,0,0);
-	padding: 2px;
-	background-color: gray;
-}</string>
-        </property>
-        <property name="text">
-         <string>Login</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_settings">
-        <property name="styleSheet">
-         <string notr="true">QPushButton:hover{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(197, 197, 197), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(197, 197, 197));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
-	border-width: 1px;
-	border-radius: 5px;
-	color: rgb(0,0,0);
-	padding: 2px;
-	background-color: gray;
-}</string>
-        </property>
-        <property name="text">
-         <string>Settings</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_help">
-        <property name="styleSheet">
-         <string notr="true">QPushButton:hover{
-	border-style: solid;
-	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
-	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(197, 197, 197), stop:1 rgb(227, 227, 227));
-	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(197, 197, 197));
-	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
-	border-width: 1px;
-	border-radius: 5px;
-	color: rgb(0,0,0);
-	padding: 2px;
-	background-color: gray;
-}</string>
-        </property>
-        <property name="text">
-         <string>Help</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="2" column="1" rowspan="7">
-     <widget class="QFrame" name="frame">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QToolButton" name="button_activity">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Activity</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>assets/icons/notification.png</normaloff>assets/icons/notification.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextUnderIcon</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="button_chat">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::StrongFocus</enum>
-         </property>
-         <property name="text">
-          <string>Chat</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>assets/icons/chat.png</normaloff>assets/icons/chat.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextUnderIcon</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="button_classrooms">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Classrooms</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>assets/icons/people.png</normaloff>assets/icons/people.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextUnderIcon</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="button_calendar">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Calendar</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>assets/icons/calendar.png</normaloff>assets/icons/calendar.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextUnderIcon</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="button_teachers">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>For Teachers</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>assets/icons/teacher.png</normaloff>assets/icons/teacher.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonTextUnderIcon</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1" colspan="2">
-     <widget class="Line" name="line_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="2" rowspan="8">
      <widget class="QTabWidget" name="tabWidget">
+      <property name="styleSheet">
+       <string notr="true">QTabWidget::pane {
+    border-top: 2px solid #C2C7CB;
+}
+QTabWidget::tab-bar {
+    left: 0px;
+}
+
+QTabBar::tab {
+    border: 2px solid #C4C4C3;
+    border-bottom-color: #C2C7CB; 
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    min-width: 8ex;
+    padding: 2px;
+	height: 40px;
+	width: 100px;
+}</string>
+      </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -976,6 +675,262 @@ Edus is a high quality software made for students of all age.
         <string>Chat</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_7">
+        <item row="0" column="1">
+         <widget class="QFrame" name="chat_frame">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="QFrame" name="scrollchat_frame">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>200</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_15">
+              <item row="0" column="0">
+               <widget class="QScrollArea" name="scrollArea_3">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white</string>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOn</enum>
+                </property>
+                <property name="widgetResizable">
+                 <bool>true</bool>
+                </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>996</width>
+                   <height>607</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_16">
+                  <item row="0" column="1">
+                   <layout class="QVBoxLayout" name="msg_right">
+                    <item>
+                     <widget class="QPushButton" name="pushButton_4">
+                      <property name="text">
+                       <string>test button 2</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="0" column="0">
+                   <layout class="QVBoxLayout" name="msg_left">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QFrame" name="textframe">
+                      <property name="maximumSize">
+                       <size>
+                        <width>300</width>
+                        <height>150</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: #009c99</string>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_10">
+                       <item>
+                        <widget class="QToolButton" name="toolButton">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">border: 1px solid #009c99</string>
+                         </property>
+                         <property name="text">
+                          <string>Title</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QTextBrowser" name="textBrowser"/>
+                       </item>
+                       <item>
+                        <widget class="QToolButton" name="toolButton_2">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                         <property name="layoutDirection">
+                          <enum>Qt::LeftToRight</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #007a78;
+border: 1px solid #007a78;</string>
+                         </property>
+                         <property name="text">
+                          <string>reply</string>
+                         </property>
+                         <property name="icon">
+                          <iconset>
+                           <normaloff>assets/icons/reply.png</normaloff>assets/icons/reply.png</iconset>
+                         </property>
+                         <property name="toolButtonStyle">
+                          <enum>Qt::ToolButtonTextBesideIcon</enum>
+                         </property>
+                         <property name="autoRaise">
+                          <bool>false</bool>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLineEdit" name="chat_input">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 2px solid #009c99;</string>
+             </property>
+             <property name="maxLength">
+              <number>500</number>
+             </property>
+             <property name="cursorMoveStyle">
+              <enum>Qt::LogicalMoveStyle</enum>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QPushButton" name="emoji_dialog">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>assets/icons/emoji.png</normaloff>assets/icons/emoji.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="attach_file">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>assets/icons/attach.png</normaloff>assets/icons/attach.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="emojize">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>assets/icons/emojize.png</normaloff>assets/icons/emojize.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="chat_send">
+               <property name="text">
+                <string>Send</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>assets/icons/send.png</normaloff>assets/icons/send.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QFrame" name="frame_6">
           <property name="frameShape">
@@ -986,7 +941,7 @@ Edus is a high quality software made for students of all age.
           </property>
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="1" column="0">
-            <widget class="QScrollArea" name="scrollArea_2">
+            <widget class="QScrollArea" name="scroll_chat_list">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -1008,7 +963,7 @@ Edus is a high quality software made for students of all age.
                 <x>0</x>
                 <y>0</y>
                 <width>198</width>
-                <height>700</height>
+                <height>686</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1040,95 +995,6 @@ Edus is a high quality software made for students of all age.
           </layout>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QFrame" name="chat_frame">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_9">
-           <item row="3" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <item>
-              <widget class="QPushButton" name="pushButton_14">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>assets/icons/emoji.png</normaloff>assets/icons/emoji.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_15">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>assets/icons/attach.png</normaloff>assets/icons/attach.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="chat_send">
-               <property name="text">
-                <string>Send</string>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>assets/icons/send.png</normaloff>assets/icons/send.png</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLineEdit" name="chat_input"/>
-           </item>
-           <item row="0" column="0">
-            <widget class="QScrollArea" name="scrollArea_3">
-             <property name="styleSheet">
-              <string notr="true">background-color: white;</string>
-             </property>
-             <property name="verticalScrollBarPolicy">
-              <enum>Qt::ScrollBarAlwaysOn</enum>
-             </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_2">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>1020</width>
-                <height>673</height>
-               </rect>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_10"/>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_classrooms">
@@ -1153,14 +1019,14 @@ Edus is a high quality software made for students of all age.
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QLineEdit" name="lineEdit_2">
+           <widget class="QLineEdit" name="input_classroom_search">
             <property name="placeholderText">
              <string>Search for classroom</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="classroom_search_button">
             <property name="text">
              <string>Search</string>
             </property>
@@ -1173,28 +1039,27 @@ Edus is a high quality software made for students of all age.
          </layout>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_2">
+         <widget class="QGroupBox" name="groupbox_classroom">
           <property name="title">
            <string>Your classrooms (1)</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
            <item row="0" column="0">
-            <widget class="QPushButton" name="pushButton_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+            <widget class="QScrollArea" name="scrollArea_4">
+             <property name="widgetResizable">
+              <bool>true</bool>
              </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>PushButton</string>
-             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents_2">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>1271</width>
+                <height>636</height>
+               </rect>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_17"/>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -1208,7 +1073,7 @@ Edus is a high quality software made for students of all age.
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QGroupBox" name="groupBox">
+         <widget class="QGroupBox" name="classroom_channels">
           <property name="minimumSize">
            <size>
             <width>150</width>
@@ -1229,6 +1094,19 @@ Edus is a high quality software made for students of all age.
              </property>
             </widget>
            </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </widget>
         </item>
@@ -1242,6 +1120,13 @@ Edus is a high quality software made for students of all age.
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
+            <widget class="QLabel" name="classroom_name">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Classroom Main&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QTabWidget" name="verticalTabWidget">
              <property name="currentIndex">
               <number>0</number>
@@ -1253,6 +1138,15 @@ Edus is a high quality software made for students of all age.
               <layout class="QGridLayout" name="gridLayout_5">
                <item row="0" column="0">
                 <widget class="QScrollArea" name="scrollArea">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: white</string>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <property name="verticalScrollBarPolicy">
+                  <enum>Qt::ScrollBarAlwaysOn</enum>
+                 </property>
                  <property name="widgetResizable">
                   <bool>true</bool>
                  </property>
@@ -1261,8 +1155,8 @@ Edus is a high quality software made for students of all age.
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1088</width>
-                    <height>601</height>
+                    <width>1068</width>
+                    <height>494</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_9"/>
@@ -1291,7 +1185,7 @@ Edus is a high quality software made for students of all age.
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout">
                   <item>
-                   <widget class="QPushButton" name="pushButton_2">
+                   <widget class="QPushButton" name="emoji_dialog_2">
                     <property name="autoFillBackground">
                      <bool>false</bool>
                     </property>
@@ -1353,8 +1247,17 @@ Edus is a high quality software made for students of all age.
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>20</height>
+                   <height>50</height>
                   </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 2px solid #009c99</string>
                  </property>
                  <property name="dragEnabled">
                   <bool>false</bool>
@@ -1378,50 +1281,7 @@ Edus is a high quality software made for students of all age.
               <attribute name="title">
                <string>Asssignments</string>
               </attribute>
-              <layout class="QGridLayout" name="gridLayout_14">
-               <item row="0" column="0">
-                <widget class="QTableWidget" name="tableWidget_2">
-                 <property name="alternatingRowColors">
-                  <bool>false</bool>
-                 </property>
-                 <row>
-                  <property name="text">
-                   <string>1</string>
-                  </property>
-                 </row>
-                 <column>
-                  <property name="text">
-                   <string>Assignment</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>Subject</string>
-                  </property>
-                 </column>
-                 <column>
-                  <property name="text">
-                   <string>Due</string>
-                  </property>
-                 </column>
-                 <item row="0" column="0">
-                  <property name="text">
-                   <string>Finish math homework page 1</string>
-                  </property>
-                 </item>
-                 <item row="0" column="1">
-                  <property name="text">
-                   <string>Math</string>
-                  </property>
-                 </item>
-                 <item row="0" column="2">
-                  <property name="text">
-                   <string>12.08.2020</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-              </layout>
+              <layout class="QGridLayout" name="gridLayout_14"/>
              </widget>
              <widget class="QWidget" name="tab_activity">
               <attribute name="title">
@@ -1563,6 +1423,338 @@ Edus is a high quality software made for students of all age.
        </layout>
       </widget>
      </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" rowspan="7">
+     <widget class="QFrame" name="frame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QToolButton" name="button_activity">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string>Activity</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/icons/notification.png</normaloff>assets/icons/notification.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="button_chat">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Chat</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/icons/chat.png</normaloff>assets/icons/chat.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="button_classrooms">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Classrooms</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/icons/people.png</normaloff>assets/icons/people.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="button_calendar">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Calendar</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/icons/calendar.png</normaloff>assets/icons/calendar.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="button_teachers">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>For Teachers</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>assets/icons/teacher.png</normaloff>assets/icons/teacher.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>800</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="button_name">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Name</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>assets/default.png</normaloff>assets/default.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QPushButton" name="button_login">
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(197, 197, 197), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(197, 197, 197));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
+	border-width: 1px;
+	border-radius: 5px;
+	color: rgb(0,0,0);
+	padding: 2px;
+	background-color: gray;
+}</string>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_settings">
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(197, 197, 197), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(197, 197, 197));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
+	border-width: 1px;
+	border-radius: 5px;
+	color: rgb(0,0,0);
+	padding: 2px;
+	background-color: gray;
+}</string>
+        </property>
+        <property name="text">
+         <string>Settings</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_help">
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover{
+	border-style: solid;
+	border-top-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
+	border-right-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(197, 197, 197), stop:1 rgb(227, 227, 227));
+	border-left-color: qlineargradient(spread:pad, x1:0, y1:0.5, x2:1, y2:0.5, stop:0 rgb(227, 227, 227), stop:1 rgb(197, 197, 197));
+	border-bottom-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgb(195, 195, 195), stop:1 rgb(222, 222, 222));
+	border-width: 1px;
+	border-radius: 5px;
+	color: rgb(0,0,0);
+	padding: 2px;
+	background-color: gray;
+}</string>
+        </property>
+        <property name="text">
+         <string>Help</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

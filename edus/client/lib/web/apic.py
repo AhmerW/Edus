@@ -15,15 +15,9 @@ class Calls(object):
 
 
     async def getUrl(self, *urls):
-        return "{0}{1}".format(self.url, '/'.join(urls))+"/"
+        return "{0}{1}/".format(self.url, '/'.join(urls))
 
-    async def login(self, username, password):
-        data = await self.basic({"username": username, "password": password}, 'login
-        self.latest_login =  data
-        return data
 
-    async def register(self, username, password):
-        return await self.basic({"username": username, "password": password}, 'register')
 
     async def basic(self, data, *urls):
         try:

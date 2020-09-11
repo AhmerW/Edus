@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1491</width>
-    <height>982</height>
+    <height>1006</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -584,7 +584,10 @@ QHorizontalLine{
     <item row="2" column="2" rowspan="8">
      <widget class="QTabWidget" name="tabWidget">
       <property name="styleSheet">
-       <string notr="true">QTabWidget::pane {
+       <string notr="true">
+
+
+QTabWidget::pane {
     border-top: 2px solid #C2C7CB;
 }
 QTabWidget::tab-bar {
@@ -603,7 +606,7 @@ QTabBar::tab {
 }</string>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -710,6 +713,9 @@ Edus is a high quality software made for students of all age.
                 <property name="styleSheet">
                  <string notr="true">background-color: white</string>
                 </property>
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
                 <property name="verticalScrollBarPolicy">
                  <enum>Qt::ScrollBarAlwaysOn</enum>
                 </property>
@@ -721,8 +727,8 @@ Edus is a high quality software made for students of all age.
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>996</width>
-                   <height>607</height>
+                   <width>998</width>
+                   <height>623</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_16">
@@ -963,7 +969,7 @@ border: 1px solid #007a78;</string>
                 <x>0</x>
                 <y>0</y>
                 <width>198</width>
-                <height>686</height>
+                <height>700</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1055,7 +1061,7 @@ border: 1px solid #007a78;</string>
                 <x>0</x>
                 <y>0</y>
                 <width>1271</width>
-                <height>636</height>
+                <height>650</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_17"/>
@@ -1156,7 +1162,7 @@ border: 1px solid #007a78;</string>
                     <x>0</x>
                     <y>0</y>
                     <width>1068</width>
-                    <height>494</height>
+                    <height>518</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_9"/>

@@ -12,33 +12,45 @@ from lib.chat import Chat
 
 loop = asyncio.get_event_loop()
 
-_con = 1
-netevent = NetworkEvents('localhost', 8991)
-if _con:
-    netevent.start()
+
+class ProcessEvent(object):
+    def __init__(self):
+        pass
+
+    def on_message(self, msg):
+        pass
+    def on_friend_request(self, data):
+        pass
 
 class Events(object):
     def __init__(self, window):
         self.window = window
         ## objects ##
+        self.netevent = None
         self.apic = Calls()
+        self.processor = ProcessEvent()
         self.network = Network(self.window)
         self.chat = Chat(self.window, self.network, self.apic, loop)
-        self.login = LoginDialog(self.apic)
+        self.login = LoginDialog(self)
 
         self.classroom_buttons = {}
         self.previous = None
         self.commands = {
             'button_login': self.login.show,
-            'emoji_dialog': self.chat.dialog_emoji.show,
+            'emoji_dialog': self.chat.dialog_emoji.start,
             'chat_send': self.chat.addMsg,
             'emojize': self.chat.emojize
         }
 
-
-    @netevent.registerEvent('on_message')
-    def on_message(self, msg):
-        print(msg)
+    def registerEvents(self):
+        print("registering")
+        for event in dir(self.processor):
+            func = getattr(self.processor, event)
+            _ev = self.netevent.events.get(event)
+            if callable(func) and _ev:
+                self.netevent.events[_ev] = func
+        if hasattr(self.netevent, 'start'):
+            self.netevent.start()
 
     def loadClassrooms(self, func=None, search=False):
         if search:
