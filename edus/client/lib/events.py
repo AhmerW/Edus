@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, QtCore
 from functools import partial
 import asyncio
 import typing
+from gui.dialogs.friend.friend import FriendDialog
 from gui.dialogs.login.login import LoginDialog
 from lib.web.netevent import NetworkEvents
 from lib.caching import CustomCache
@@ -29,6 +30,7 @@ class Events(object):
         ## objects ##
         self.netevent = None
         self.apic = Calls()
+        self.friend = FriendDialog()
         self.processor = ProcessEvent()
         self.network = Network(self.window)
         self.login = LoginDialog(self)
@@ -38,6 +40,7 @@ class Events(object):
         self.previous = None
         self.commands = {
             'button_login': self.login.show,
+            'button_new': self.friend.show,
             'emoji_dialog': self.chat.dialog_emoji.start,
             'chat_send': self.chat.addMsg,
             'emojize': self.chat.emojize
