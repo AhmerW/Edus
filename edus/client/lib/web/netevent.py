@@ -9,7 +9,7 @@ from time import sleep
 class NetworkEvents(threading.Thread):
     def __init__(self, ip, port, uid):
         super(NetworkEvents, self).__init__()
-        self.ip, self.port, self.uid = ip, port, uid
+        self.ip, self.port, self.uid = ip, port, str(uid)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connected = False
 
@@ -50,8 +50,11 @@ class NetworkEvents(threading.Thread):
                 event = self.sock.recv(2080).decode() # event:data
                 if not ':' in event:
                     continue
-                event, data = event.split(':')
-                func = events.get(event)
+                raw = event.split(':')
+                if not len(raw) == 2:
+                    continue
+                ev, data = raw
+                func = self.events.get(ev)
                 if callable(func):
                     func(data)
             except ConnectionAbortedError:

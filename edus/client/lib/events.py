@@ -18,9 +18,10 @@ class ProcessEvent(object):
         pass
 
     def on_message(self, msg):
-        pass
+        print(msg)
+
     def on_friend_request(self, data):
-        pass
+        print(data)
 
 class Events(object):
     def __init__(self, window):
@@ -30,8 +31,8 @@ class Events(object):
         self.apic = Calls()
         self.processor = ProcessEvent()
         self.network = Network(self.window)
-        self.chat = Chat(self.window, self.network, self.apic, loop)
         self.login = LoginDialog(self)
+        self.chat = Chat(self.window, self.network, self.apic, loop, self.login)
 
         self.classroom_buttons = {}
         self.previous = None
@@ -43,7 +44,6 @@ class Events(object):
         }
 
     def registerEvents(self):
-        print("registering")
         for event in dir(self.processor):
             func = getattr(self.processor, event)
             _ev = self.netevent.events.get(event)
@@ -70,7 +70,6 @@ class Events(object):
         for i, classroom in enumerate(self.network.classrooms):
             if search:
                 if not classroom in classrooms:
-                    print("not")
                     button = self.classroom_buttons.get(classroom)
                     if button:
                         button.deleteLater()
@@ -88,7 +87,6 @@ class Events(object):
             button.setMinimumSize(QtCore.QSize(100, 100))
             button.setMaximumSize(QtCore.QSize(600, 16777215))
             button.setText(classroom.name)
-            button.setStyleSheet("")
 
             self.window.gridLayout_17.addWidget(button, i, 0, 1, 1)
             self.classroom_buttons[classroom] = button

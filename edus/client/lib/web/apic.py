@@ -24,16 +24,18 @@ class Calls(object):
             async with self.session.post(await self.getUrl(*urls), data=data) as resp:
                 return await resp.json()
         except Exception as e:
-            print("ex ", e)
             return {}
 
-    async def sendMessage(self, msg, uid, name, tid):
+    async def sendMessage(self, msg, uid, name, tid, tn, token):
         payload = {
             'content': msg,
             'uid': uid,
             'author': name,
-            'target': tid # target id
-        }
+            'target': tid, # target id,
+            'target_name': target_name
+            'type': 'dm',
+            'token': token
+
         try:
             return await self.basic(payload, 'messages','add')
         except Exception as e:

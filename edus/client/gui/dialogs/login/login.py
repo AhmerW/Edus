@@ -13,6 +13,12 @@ class LoginDialog(QtWidgets.QDialog):
         super(LoginDialog, self).__init__()
         ##objects##
         self.event = event
+
+        ## data ##
+        self.token = None
+        self.uid = None
+        self.username = None
+
         self.register_dialog = RegisterDialog(self.event.apic)
         uic.loadUi(os.path.join(os.path.abspath('gui'), 'dialogs', 'login', 'login.ui'), self)
 
@@ -33,13 +39,17 @@ class LoginDialog(QtWidgets.QDialog):
             'login'
         ))
         if r.get('status'):
+            self.token = r.get('token')
+            self.uid = r.get('uid')
+            self.username = r.get('username')
             self.logged_in = True
             status = "Login successfull!"
-            self.event.netevent = NetworkEvents('localhost', 8989, r.get('uid'))
+            self.event.netevent = NetworkEvents('localhost', 8989, self.uid)
             self.event.registerEvents()
         else:
             status = "Login failed!"
         self.status.setText(status)
 
     def startRegister(self):
+        self.close()
         self.register_dialog.show()

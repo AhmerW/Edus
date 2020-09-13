@@ -11,11 +11,12 @@ from gui.dialogs.emoji.emoji import EmojiDialog
 MAX_MSG = 20
 
 class Chat(object):
-    def __init__(self, window, network, apic, loop):
+    def __init__(self, window, network, apic, loop, login):
         self.window = window
         self.network = network
         self.apic = apic
         self.loop = loop
+        self.login = login
         self.frames = {}
         self.username = "guest"
         self.uid = "self"
@@ -76,7 +77,12 @@ class Chat(object):
 
         if from_self:
             self.loop.run_until_complete(self.apic.sendMessage(
-                msg, self.uid, self.username, self.current_contact_uid
+                msg,
+                self.login.uid,
+                self.login.username,
+                self.current_contact,
+                self.current_contact_uid,
+                self.login.token
             ))
             if not self.apic.latest:
                 error = True

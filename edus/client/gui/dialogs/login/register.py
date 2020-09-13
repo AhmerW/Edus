@@ -30,6 +30,7 @@ class RegisterDialog(QtWidgets.QDialog):
             {"email": email, "password": pass1, "username": username},
             'register'
         ))
+        print(r)
         if r.get('uid'):
             status = "Successfully registered. Welcome {0}".format(username)
         else:
