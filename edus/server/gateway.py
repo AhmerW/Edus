@@ -13,14 +13,20 @@ UID_LEN = 12
 TOKEN_LEN = 20
 
 ## QUERIES ##
-LOGIN_QUERY = "select uid, token, username, friends from users where email=$1 and password=$2"
-REGISTER_QUERY = """insert into users(uid, email, password, username, token) values($1, $2, $3, $4, $5)"""
+LOGIN_QUERY = "select uid, token, username, tag, friends from users where email=$1 and password=$2"
+REGISTER_QUERY = """
+insert into users(uid, email, password, username, token, tag) values($1, $2, $3, $4, $5, $6)
+"""
 class Auth(object):
     def __init__(self, pool):
         self.pool = pool
         self.db = {} # uid : {}
         self.userdb = {} # email: uid
         self.conn = None
+
+    async def genTag(self):
+        tag = randUid(4)
+        return tag
 
     async def clear(self, data, index=0):
         if len(data) == 0:
@@ -88,21 +94,24 @@ class Auth(object):
                 password
             )
             res = await self.clear(res)
-
         uid, token = res.get('uid'), res.get('token')
+        tag = res.get('tag')
         username, friends = res.get('username'), res.get('friends')
         if not self.db.get(uid):
+            if friends:
+                friends = json.loads(friends.replace("'", ""))
             self.db[uid] = {
                     'token': token,
                     'client': None,
-                    'relations': {'friends': json.loads(friends.replace("'", ""))}
+                    'relations': {'friends': friends}
                 }
 
         return {
                 'status': bool(res),
                 'uid': uid,
                 'token': token,
-                'username': username
+                'username': username,
+                'tag': tag
             }
 
     async def register(self, data):
@@ -116,9 +125,10 @@ class Auth(object):
 
         uid = randUid(UID_LEN)
         token = randToken(TOKEN_LEN)
+        tag = await self.genTag()
 
         async with self.pool.acquire() as con:
-            await con.execute(REGISTER_QUERY, uid, email, password, username, str(token))
+            await con.execute(REGISTER_QUERY, uid, email, password, username, str(token), tag)
 
         self.userdb[email] = uid
         self.db[uid] = {
@@ -127,7 +137,7 @@ class Auth(object):
                 'relations': {'friends': {}} # uid, name
             }
 
-        return {'uid': uid, 'token': token}
+        return {'uid': uid, 'token': token, 'tag': tag}
 
 class Gateway():
     def __init__(self, host = 'localhost', port = 8991):

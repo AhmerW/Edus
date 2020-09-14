@@ -32,7 +32,7 @@ class RegisterDialog(QtWidgets.QDialog):
         ))
         print(r)
         if r.get('uid'):
-            status = "Successfully registered. Welcome {0}".format(username)
+            status = "Successfully registered. Welcome {0}.\nYour tag is: {1}".format(username, r.get('tag'))
         else:
             status = "Could not register. Try again"
         self.status.setText(status)

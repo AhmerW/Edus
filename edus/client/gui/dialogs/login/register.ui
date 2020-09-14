@@ -7,25 +7,42 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>391</height>
+    <height>406</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Register</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
+   <string notr="true">QDialog {
+background-color: #009c99;
+}
+QLabel:hover {
+color: white;
+}
+
 QLineEdit {
 	border-width: 1px; border-radius: 4px;
 	border-style: solid;
 	border-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.5, y2:0, stop:0 rgba(0, 113, 255, 255), stop:1 rgba(91, 171, 252, 255));
 }
+QLineEdit:hover {
+border: 2px solid aqua;
+}
+
 QPushButton{
 
 }
 QPushButton{
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 white, stop: 1 grey);
-
+background-color: #383b40;
+border: 1px solid aqua;
+color: white;
+}
+QPushButton:hover {
+background-color: gray;
+}
+QPushButton:pressed {
+background-color: aqua;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">

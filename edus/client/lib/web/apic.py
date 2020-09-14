@@ -32,10 +32,10 @@ class Calls(object):
             'uid': uid,
             'author': name,
             'target': tid, # target id,
-            'target_name': target_name
+            'target_name': tn,
             'type': 'dm',
             'token': token
-
+        }
         try:
             return await self.basic(payload, 'messages','add')
         except Exception as e:

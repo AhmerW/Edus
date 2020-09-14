@@ -30,7 +30,7 @@ class Events(object):
         ## objects ##
         self.netevent = None
         self.apic = Calls()
-        self.friend = FriendDialog()
+        self.friend = FriendDialog(self.apic)
         self.processor = ProcessEvent()
         self.network = Network(self.window)
         self.login = LoginDialog(self)
@@ -58,11 +58,9 @@ class Events(object):
     def loadClassrooms(self, func=None, search=False):
         if search:
             search = self.window.input_classroom_search.text().lower().strip()
-            if not search:
-                search = False
-            else:
+            if search:
                 classrooms = [classroom for classroom in self.network.classrooms if search in classroom.name.lower()]
-        if not search:
+        if not bool(search):
             classrooms = self.network.classrooms
             title_text = "Classrooms ({0})"
         else:

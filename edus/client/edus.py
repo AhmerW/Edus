@@ -4,6 +4,7 @@ from functools import partial
 import sys
 import os
 from lib.events import Events
+from lib.customs import ButtonDropdown
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -30,8 +31,8 @@ class MainWindow(QtWidgets.QMainWindow):
             True
         ))
 
-
         self.startWelcome()
+        self.createOthers()
         self.bindButtons()
 
     def closeEvent(self, event):
@@ -79,6 +80,17 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.events.processOther(name, special)
 
+    def createOthers(self):
+        ## dropdown button for name, found in top right ##
+        actions = [
+            'Settings'
+        ]
+        self.dropdown_name_menu = QtWidgets.QMenu(self)
+        self.dropdown_name = ButtonDropdown()
+        self.dropdown_name.setText("Name")
+
+        self.dropdown_name.setMinimumSize(150, 50)
+        self.horizontalLayout_2.addWidget(self.dropdown_name)
 
     def mousePressEvent(self, event):
         if event.buttons() == QtCore.Qt.RightButton:
