@@ -13,6 +13,8 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi(os.path.join(os.path.abspath('gui'), 'edus.ui'), self)
         self.events = Events(self)
 
+        #self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowTitleHint | QtCore.Qt.CustomizeWindowHint)
+
 
         ## tabs ##
         self.button_tabs = {
@@ -82,14 +84,26 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def createOthers(self):
         ## dropdown button for name, found in top right ##
-        actions = [
-            'Settings'
-        ]
+        actions = {
+            self.events.login.username: 0,
+            'login': 'button_login',
+            'profile': 0,
+            'Settings': 0
+        }
+        action_objects = []
         self.dropdown_name_menu = QtWidgets.QMenu(self)
         self.dropdown_name = ButtonDropdown()
         self.dropdown_name.setText("Name")
 
+        for name, arg in actions.items():
+            action = QtWidgets.QAction(name, self)
+            action.triggered.connect(partial(self.onClick, action, name if not bool(arg) else arg))
+            self.dropdown_name_menu.addAction(action)
+            action_objects.append(action)
+
         self.dropdown_name.setMinimumSize(150, 50)
+        self.dropdown_name.setMenu(self.dropdown_name_menu)
+        self.dropdown_name.setDefaultAction(action_objects[0])
         self.horizontalLayout_2.addWidget(self.dropdown_name)
 
     def mousePressEvent(self, event):
