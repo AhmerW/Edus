@@ -121,4 +121,4 @@ class Events(object):
         command = self.commands.get(name)
         if callable(command):
             command()
-        print(name)
+        

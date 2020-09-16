@@ -584,7 +584,7 @@ QHorizontalLine{
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="2" rowspan="8">
+    <item row="3" column="2" rowspan="8">
      <widget class="QTabWidget" name="tabWidget">
       <property name="styleSheet">
        <string notr="true">
@@ -609,7 +609,7 @@ QTabBar::tab {
 }</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="movable">
        <bool>true</bool>
@@ -664,6 +664,9 @@ QTabBar::tab {
           <layout class="QGridLayout" name="gridLayout_6">
            <item row="0" column="0">
             <widget class="QLabel" name="label_2">
+             <property name="styleSheet">
+              <string notr="true">background-color: white;</string>
+             </property>
              <property name="text">
               <string>Thank you for choosing Edus as your digital education platform.
 Edus is a high quality software made for students of all age.
@@ -730,8 +733,8 @@ Edus is a high quality software made for students of all age.
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>998</width>
-                   <height>623</height>
+                   <width>1020</width>
+                   <height>625</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_16">
@@ -978,7 +981,7 @@ border: 1px solid aqua;
                 <x>0</x>
                 <y>0</y>
                 <width>198</width>
-                <height>700</height>
+                <height>702</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1069,8 +1072,8 @@ border: 1px solid aqua;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>1271</width>
-                <height>650</height>
+                <width>1293</width>
+                <height>652</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_17"/>
@@ -1170,8 +1173,8 @@ border: 1px solid aqua;
                    <rect>
                     <x>0</x>
                     <y>0</y>
-                    <width>1068</width>
-                    <height>518</height>
+                    <width>1090</width>
+                    <height>544</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_9"/>
@@ -1439,14 +1442,7 @@ border: 1px solid aqua;
       </widget>
      </widget>
     </item>
-    <item row="1" column="1" colspan="2">
-     <widget class="Line" name="line_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
+    <item row="1" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
        <widget class="QPushButton" name="button_login">
@@ -1519,7 +1515,34 @@ border: 1px solid aqua;
       </item>
      </layout>
     </item>
-    <item row="2" column="1" rowspan="7">
+    <item row="1" column="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>800</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="1" colspan="2">
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1" rowspan="7">
      <widget class="QFrame" name="frame">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -1534,6 +1557,21 @@ border: 1px solid aqua;
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>10</number>
+       </property>
        <item>
         <widget class="QToolButton" name="button_activity">
          <property name="sizePolicy">
@@ -1700,7 +1738,7 @@ border: 1px solid aqua;
       </layout>
      </widget>
     </item>
-    <item row="3" column="0">
+    <item row="4" column="0">
      <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -1710,25 +1748,24 @@ border: 1px solid aqua;
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>800</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
+    <item row="0" column="1">
+     <widget class="Line" name="line">
+      <property name="windowModality">
+       <enum>Qt::NonModal</enum>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>200</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

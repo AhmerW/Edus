@@ -1,5 +1,4 @@
-from PyQt5 import QtWidgets
-from PyQt5 import QtCore, uic
+from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from functools import partial
 import sys
 import os
@@ -25,6 +24,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.button_activity: (self.tab_activity, "Activity"),
             'classroom_button': (self.tab_classroom_chat, "Classroom Chat")
         }
+        self.tab_welcome.setStyleSheet("background-color: white;")
         self.cbut = None
         ## call functions ##
         self.classroom_search_button.clicked.connect(partial(
@@ -32,6 +32,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.onClick,
             True
         ))
+        self._b_ss = "border-radius: 20px; margin 5px; border-style: solid; border-width: 2px;"
 
         self.startWelcome()
         self.createOthers()
@@ -43,8 +44,15 @@ class MainWindow(QtWidgets.QMainWindow):
         event.accept()
 
     def startWelcome(self):
-        for _ in range(len(self.button_tabs)-1):
+        st = ""
+        for tab in list(self.button_tabs.keys()):
+            # print(type(self.button_tabs[tab][0]), isinstance(self.button_tabs[tab][0], QtWidgets.QWidget))
+            if isinstance(self.button_tabs[tab][0], QtWidgets.QWidget):
+                self.button_tabs[tab][0].setStyleSheet(st)
             self.tabWidget.removeTab(1)
+        for button in self.button_tabs:
+            if isinstance(button, QtWidgets.QToolButton):
+                button.setStyleSheet(self._b_ss)
 
 
     def bindButtons(self):
@@ -67,7 +75,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     return
                 if isinstance(obj, QtWidgets.QToolButton):
                     if self.cbut:
-                        self.cbut.setStyleSheet("")
+                        self.cbut.setStyleSheet(self._b_ss)
                     self.cbut = obj
                     obj.setStyleSheet("border-left: 5px solid aqua;")
                 tab = self.events.loadTab(tab, text.lower())
@@ -93,6 +101,7 @@ class MainWindow(QtWidgets.QMainWindow):
         action_objects = []
         self.dropdown_name_menu = QtWidgets.QMenu(self)
         self.dropdown_name = ButtonDropdown()
+        self.dropdown_name.setIcon(QtGui.QIcon(os.path.join('gui', 'assets', 'default.png')))
         self.dropdown_name.setText("Name")
 
         for name, arg in actions.items():
