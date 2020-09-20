@@ -17,7 +17,8 @@ class LoginDialog(QtWidgets.QDialog):
         ## data ##
         self.token = None
         self.uid = None
-        self.username = 'Guest'
+        self.tag = None
+        self.username = 'Not logged in'
 
         self.register_dialog = RegisterDialog(self.event.apic)
         uic.loadUi(os.path.join(os.path.abspath('gui'), 'dialogs', 'login', 'login.ui'), self)

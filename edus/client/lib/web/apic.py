@@ -13,6 +13,8 @@ class Calls(object):
         self.latest_login = None
 
 
+    async def gather(self, auth, uid):
+        return await self.basic({'token': auth, 'uid': uid}, 'gather')
 
     async def getUrl(self, *urls):
         return "{0}{1}/".format(self.url, '/'.join(urls))

@@ -17,7 +17,8 @@ ROUTES = [
     '{0}messages/add/'.format(MAIN_ROUTE),
     '{0}login/'.format(MAIN_ROUTE),
     '{0}register/'.format(MAIN_ROUTE),
-    '{0}friend/add/'.format(MAIN_ROUTE)
+    '{0}friend/add/'.format(MAIN_ROUTE),
+    '{0}gather'.format(MAIN_ROUTE)
 ]
 
 
@@ -60,6 +61,11 @@ async def login(request):
 @app.route(ROUTES[2], methods=["POST"])
 async def register(request):
     return json(await server.auth.register(request.form))
+
+@app.route(ROUTES[4], methods=["POST"])
+@authorized
+async def gather(request):
+    return json(await server.auth.gather(request.form))
 
 
 async def checkUpdate(request):

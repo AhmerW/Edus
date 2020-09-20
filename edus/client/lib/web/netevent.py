@@ -57,5 +57,5 @@ class NetworkEvents(threading.Thread):
                 func = self.events.get(ev)
                 if callable(func):
                     func(data)
-            except ConnectionAbortedError:
-                break
+            except (ConnectionAbortedError, OSError):
+                self.sock.close()

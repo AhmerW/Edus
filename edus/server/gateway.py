@@ -25,11 +25,10 @@ class Auth(object):
         self.conn = None
 
     async def genTag(self):
-        tag = randUid(4)
-        return tag
+        return randUid(4)
 
     async def clear(self, data, index=0):
-        if len(data) == 0:
+        if len(data) == 0 or isinstance(data, str):
             return {}
         return {k: v for k, v in data[index].items()}
 
@@ -41,16 +40,14 @@ class Auth(object):
 
     async def checkExists(self, email):
         async with self.pool.acquire() as con:
-            res = await con.fetch('select * from users where email=$1', email)
-            print("email ", res)
-            return bool(res)
+            return bool(await con.fetch('select * from users where email=$1', email))
 
     async def sendFriendRequest(self, data):
         author, target = data.get('from'), data.get('target')
         invalid = {'status': False, 'message': None}
-        if not author.isdigit() or not target.isdigit():
+        if not author.isdigit():
             return invalid
-        author, target = int(author), int(target)
+        author, target = int(author), target
 
         if not self.db.get(author):
             return invalid
@@ -58,6 +55,13 @@ class Auth(object):
         if target in self.db.get(author)['relations']['friends']:
             return {'status': False, 'message': 'Already friends'}
         self.db['author']['relations']['friends'][target] = data.get('target_name')
+
+    async def gather(self, data):
+        uid = data.get("uid")
+        if not uid:
+            return {}
+        async with self.pool.acquire() as con:
+            return await self.clear(await con.fetch("select username, friends, tag from users where uid=$1", int(uid)))
 
     async def sendMessage(self, data):
         invalid = {'message': 'not sent'}, False
@@ -86,13 +90,13 @@ class Auth(object):
 
     async def verifyLogin(self, data):
         email, password = data.get('email'), data.get('password')
-
         async with self.pool.acquire() as con:
             res = await con.fetch(
                 LOGIN_QUERY,
                 email,
                 password
             )
+            print(res)
             res = await self.clear(res)
         uid, token = res.get('uid'), res.get('token')
         tag = res.get('tag')

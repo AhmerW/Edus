@@ -5,7 +5,6 @@ import typing
 from gui.dialogs.friend.friend import FriendDialog
 from gui.dialogs.login.login import LoginDialog
 from lib.web.netevent import NetworkEvents
-from lib.caching import CustomCache
 from lib.network import Network
 from lib.web.apic import Calls
 from lib.chat import Chat
@@ -30,10 +29,10 @@ class Events(object):
         ## objects ##
         self.netevent = None
         self.apic = Calls()
-        self.friend = FriendDialog(self.apic)
         self.processor = ProcessEvent()
         self.network = Network(self.window)
         self.login = LoginDialog(self)
+        self.friend = FriendDialog(self.apic, self.login.uid)
         self.chat = Chat(self.window, self.network, self.apic, loop, self.login)
 
         self.classroom_buttons = {}
@@ -42,7 +41,7 @@ class Events(object):
             'button_login': self.login.show,
             'button_new': self.friend.show,
             'emoji_dialog': self.chat.dialog_emoji.start,
-            'chat_send': self.chat.addMsg,
+            'chat_send': self.chat.addMsgSelf,
             'emojize': self.chat.emojize
         }
 
@@ -103,22 +102,11 @@ class Events(object):
 
 
     def loadTab(self, tab, name):
-
-        if name == "chat":
-            if self.previous == self.network.contacts:
-                self.network.button_values[self.network.current_contact].click()
-                return tab
-            value = self.chat.getContactButtons(
-                self.window.scrollAreaWidgetContents,
-                self.window.verticalLayout_5,
-                self.network.contacts
-            )
-            self.previous = self.network.contacts
-            self.network.button_values[self.network.current_contact].click()
+        print("loading")
         return tab
+
 
     def processOther(self, name, other=None):
         command = self.commands.get(name)
         if callable(command):
             command()
-        

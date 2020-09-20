@@ -3,7 +3,12 @@ from PyQt5 import QtWidgets
 from PyQt5 import QtCore, uic, QtGui
 
 class FriendDialog(QtWidgets.QDialog):
-    def __init__(self, api):
+    def __init__(self, api, uid):
         super(FriendDialog, self).__init__()
         self.api = api
         uic.loadUi(os.path.join(os.path.abspath('gui'), 'dialogs', 'friend', 'friend.ui'), self)
+
+    def send(self):
+        payload = {
+            'from': self.uid
+        }

@@ -19,6 +19,12 @@ class Student(User):
 class Teacher(User):
     pass
 
+class Contact(object):
+    def __init__(self, *args, **kwargs):
+        for detail, value in kwargs.items():
+            setattr(self, detail, value)
+
+
 class Classroom(object):
     def __init__(self, name):
         self.name = name
@@ -28,18 +34,18 @@ class Network(object):
     def __init__(self, window):
         self.window = window
         self.label_added = []
-        self.contacts = []
+        self.contacts = ["hi"]
         self.classrooms = [Classroom("Home")]
         self.ubu = {}
-        self.data = self.getData('contacts.json')
-        for uid, contact in self.data.items():
-            self.ubu[uid] = contact["name"]
-            self.contacts.append(User(uid, contact['name']))
-        self.current_contact = self.contacts[0].uid
 
         self.button_values = {}
 
 
+    def createContact(self, contact):
+        pass
+
+    def addContacts(self, contacts):
+        pass
 
     def getUbu(self, uid):
         """username by uid (ubu)"""
@@ -49,27 +55,6 @@ class Network(object):
         for contact in self.contacts:
             pass
 
+
     def getPath(self, path, *args):
         return os.path.join(os.path.abspath(path), *args)
-
-    def getData(self, path):
-        with open(self.getPath('cache', path), "r") as f:
-            try:
-                return json.load(f)
-            except ValueError:
-                return {}
-
-
-    def createConctact(self, name):
-        uid = randUid()
-        contact = User(uid, name)
-        with open(self.getPath('cache', 'contacts.json'), "w+") as f:
-            try:
-                data = json.load(f)
-            except:
-                data = {}
-            data[uid] = {"name": name, "msgs": []}
-            json.dump(data, f, indent=2)
-
-
-        return contact

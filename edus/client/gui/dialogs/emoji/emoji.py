@@ -1,5 +1,5 @@
-from PyQt5 import QtWidgets
 from PyQt5 import QtCore, uic, QtGui
+from PyQt5 import QtWidgets
 from functools import partial
 import emojis
 import sys

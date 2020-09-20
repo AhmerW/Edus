@@ -1,18 +1,55 @@
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from functools import partial
+import asyncio
 import sys
 import os
 from lib.events import Events
 from lib.customs import ButtonDropdown
 
+class Startup(QtWidgets.QDialog):
+    def __init__(self, window, *args, **kwargs):
+        super(Startup, self).__init__(*args, **kwargs)
+        self.window = window
+        self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowTitleHint | QtCore.Qt.CustomizeWindowHint)
+        uic.loadUi(os.path.join(os.path.abspath('gui'), 'dialogs', 'startup', 'startup.ui'), self)
+        self.logged_in = False
+        self.success = False
+
+    def proceed(self):
+        loop = asyncio.get_event_loop()
+        res = loop.run_until_complete(self.window.events.apic.gather(
+            self.window.events.login.token,
+            self.window.events.login.uid
+        ))
+        print(res)
+        self.window.events.login.username = res.get('username')
+        self.window.events.login.tag = res.get('tag')
+        for contact, details in res.get('friends').items():
+            button = QtWidgets.QPushButton()
+        self.close()
+
+    def check(self):
+        if self.logged_in:
+            return self.close()
+        self.window.events.login.exec_()
+        self.success = self.window.events.login.logged_in
+        if not self.success:
+            return self.close()
+
+        self.proceed()
+
+    def start(self):
+        QtCore.QTimer.singleShot(2000, self.check)
+        self.show()
+        self.exec_()
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         uic.loadUi(os.path.join(os.path.abspath('gui'), 'edus.ui'), self)
         self.events = Events(self)
+        self.startup = Startup(self)
 
-        #self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowTitleHint | QtCore.Qt.CustomizeWindowHint)
 
 
         ## tabs ##
@@ -35,8 +72,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self._b_ss = "border-radius: 20px; margin 5px; border-style: solid; border-width: 2px;"
 
         self.startWelcome()
-        self.createOthers()
         self.bindButtons()
+        self.startup.close()
 
     def closeEvent(self, event):
         if hasattr(self.events.netevent, 'sock'):
@@ -44,11 +81,9 @@ class MainWindow(QtWidgets.QMainWindow):
         event.accept()
 
     def startWelcome(self):
-        st = ""
         for tab in list(self.button_tabs.keys()):
-            # print(type(self.button_tabs[tab][0]), isinstance(self.button_tabs[tab][0], QtWidgets.QWidget))
             if isinstance(self.button_tabs[tab][0], QtWidgets.QWidget):
-                self.button_tabs[tab][0].setStyleSheet(st)
+                self.button_tabs[tab][0].setStyleSheet("")
             self.tabWidget.removeTab(1)
         for button in self.button_tabs:
             if isinstance(button, QtWidgets.QToolButton):
@@ -56,10 +91,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def bindButtons(self):
-        for item in self.__dict__:
-            obj = self.__dict__[item]
+        for item, obj in self.__dict__.items():
             if isinstance(obj, QtWidgets.QPushButton) or isinstance(obj, QtWidgets.QToolButton):
-                self.__dict__[item].clicked.connect(
+                obj.clicked.connect(
                     partial(
                         self.onClick,
                         obj,
@@ -70,6 +104,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def onClick(self, obj, name, special=None):
         if self.button_tabs.get(obj):
             try:
+                print(name)
                 tab, text = self.button_tabs[obj]
                 if not tab:
                     return
@@ -98,8 +133,11 @@ class MainWindow(QtWidgets.QMainWindow):
             'profile': 0,
             'Settings': 0
         }
+        frame = QtWidgets.QFrame(self)
+        self.label_tag = QtWidgets.QLabel(frame)
+        self.label_tag.setText(self.events.login.tag)
         action_objects = []
-        self.dropdown_name_menu = QtWidgets.QMenu(self)
+        self.dropdown_name_menu = QtWidgets.QMenu(frame)
         self.dropdown_name = ButtonDropdown()
         self.dropdown_name.setIcon(QtGui.QIcon(os.path.join('gui', 'assets', 'default.png')))
         self.dropdown_name.setText("Name")
@@ -119,9 +157,16 @@ class MainWindow(QtWidgets.QMainWindow):
         if event.buttons() == QtCore.Qt.RightButton:
             print("right")
 
+    def start(self, app):
+        self.startup.start()
+        if not self.startup.success:
+            print("failed")
+            return
+        self.createOthers()
+        self.show()
+        sys.exit(app.exec_())
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+    window.start(app)
