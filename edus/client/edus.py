@@ -1,10 +1,13 @@
 from PyQt5 import QtWidgets, QtGui, QtCore, uic
 from functools import partial
+import random
 import asyncio
+import json
 import sys
 import os
 from lib.events import Events
 from lib.customs import ButtonDropdown
+from  lib.network import Contact
 
 class Startup(QtWidgets.QDialog):
     def __init__(self, window, *args, **kwargs):
@@ -24,8 +27,24 @@ class Startup(QtWidgets.QDialog):
         print(res)
         self.window.events.login.username = res.get('username')
         self.window.events.login.tag = res.get('tag')
-        for contact, details in res.get('friends').items():
-            button = QtWidgets.QPushButton()
+        friends = res.get('friends')
+        if not friends:
+            try:
+                friends = json.loads(friends)
+            except Exception: friends = {}
+        else:
+            friends = {}
+        friends["john"] = {"uid": 123}
+        for friend, values in friends.items():
+            self.window.events.chat.contacts.append(Contact(
+                name=friend,
+                uid=values.get("uid")
+            ))
+            self.window.events.chat.createContactButtons(
+                self.window.contact_frame,
+                self.window.verticalLayout_10,
+                self.window.events.chat.contacts
+            )
         self.close()
 
     def check(self):
@@ -77,6 +96,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def closeEvent(self, event):
         if hasattr(self.events.netevent, 'sock'):
+            print("closed")
             self.events.netevent.sock.close()
         event.accept()
 
@@ -104,7 +124,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def onClick(self, obj, name, special=None):
         if self.button_tabs.get(obj):
             try:
-                print(name)
                 tab, text = self.button_tabs[obj]
                 if not tab:
                     return
@@ -134,8 +153,6 @@ class MainWindow(QtWidgets.QMainWindow):
             'Settings': 0
         }
         frame = QtWidgets.QFrame(self)
-        self.label_tag = QtWidgets.QLabel(frame)
-        self.label_tag.setText(self.events.login.tag)
         action_objects = []
         self.dropdown_name_menu = QtWidgets.QMenu(frame)
         self.dropdown_name = ButtonDropdown()
@@ -151,6 +168,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.dropdown_name.setMinimumSize(150, 50)
         self.dropdown_name.setMenu(self.dropdown_name_menu)
         self.dropdown_name.setDefaultAction(action_objects[0])
+        print(dir(self.dropdown_name))
         self.horizontalLayout_2.addWidget(self.dropdown_name)
 
     def mousePressEvent(self, event):

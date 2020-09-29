@@ -2,12 +2,15 @@ import os
 import ssl
 import sys
 import asyncio
+import platform
 import threading
 from sanic import Sanic
 from functools import wraps
 from sanic.response import json, text
 from sanic.exceptions import ServerError, abort, NotFound
 from gateway import Gateway
+
+_cls = "cls" if platform.system().lower().startswith("win") else "clear"
 
 app = Sanic(__name__)
 VERSION = 'v1'
@@ -72,6 +75,7 @@ async def checkUpdate(request):
     pass
 
 @app.route(ROUTES[3], methods=["POST"])
+@authorized
 async def friendRequest(request):
     return json(await server.auth.sendFriendRequest(request.form))
 
@@ -88,4 +92,7 @@ if __name__ == "__main__":
         sys.stdout.write('Console argument 1 must be database authentication\n')
     else:
         os.environ['pg_auth'] = sys.argv[1]
+        os.system(_cls)
+        if _cls == "cls":
+            os.system("title Edus")
         app.run('localhost', 8989, debug=True)

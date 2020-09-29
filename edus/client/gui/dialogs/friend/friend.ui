@@ -73,7 +73,7 @@ border: solid;</string>
      </property>
      <property name="text">
       <string notr="true">&lt;h1&gt;
-&lt;b&gt;Type in your friend's username and tag!&lt;/b&gt;
+&lt;b&gt;Type in your friend's User ID!&lt;/b&gt;
 &lt;/h1&gt;</string>
      </property>
     </widget>
@@ -139,7 +139,7 @@ border: 1px solid #3d3d3d;</string>
         <string/>
        </property>
        <property name="placeholderText">
-        <string>someone#1234</string>
+        <string>ID Here</string>
        </property>
       </widget>
      </item>

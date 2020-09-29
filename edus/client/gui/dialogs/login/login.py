@@ -31,6 +31,8 @@ class LoginDialog(QtWidgets.QDialog):
         self.register_button.clicked.connect(self.startRegister)
 
     def login(self):
+        if self.logged_in:
+            return
         email, password = self.email.text(), self.password.text()
         if not email.strip() or not password.strip():
             return self.status.setText("Some values are missing!")

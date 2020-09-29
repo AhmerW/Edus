@@ -32,7 +32,7 @@ class Events(object):
         self.processor = ProcessEvent()
         self.network = Network(self.window)
         self.login = LoginDialog(self)
-        self.friend = FriendDialog(self.apic, self.login.uid)
+        self.friend = FriendDialog(self.apic, self.login)
         self.chat = Chat(self.window, self.network, self.apic, loop, self.login)
 
         self.classroom_buttons = {}
@@ -102,8 +102,8 @@ class Events(object):
 
 
     def loadTab(self, tab, name):
-        print("loading")
         return tab
+
 
 
     def processOther(self, name, other=None):

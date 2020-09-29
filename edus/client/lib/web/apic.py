@@ -19,8 +19,6 @@ class Calls(object):
     async def getUrl(self, *urls):
         return "{0}{1}/".format(self.url, '/'.join(urls))
 
-
-
     async def basic(self, data, *urls):
         try:
             async with self.session.post(await self.getUrl(*urls), data=data) as resp:

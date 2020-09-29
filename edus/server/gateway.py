@@ -34,7 +34,7 @@ class Auth(object):
 
     async def verify(self, uid, token):
         uid = int(uid) if uid.isdigit() else None
-        if not self.db.get(uid):
+        if not uid or not self.db.get(uid):
             return False
         return self.db[uid]['token'] == token
 
@@ -58,7 +58,7 @@ class Auth(object):
 
     async def gather(self, data):
         uid = data.get("uid")
-        if not uid:
+        if not uid or not uid.isdigit():
             return {}
         async with self.pool.acquire() as con:
             return await self.clear(await con.fetch("select username, friends, tag from users where uid=$1", int(uid)))
@@ -66,14 +66,18 @@ class Auth(object):
     async def sendMessage(self, data):
         invalid = {'message': 'not sent'}, False
         uid = data.get('uid')
+        uid = int(uid) if uid.isdigit() else None
+
 
         if not self.db.get(uid):
+            print("failed")
             return invalid
 
         target = data.get('target')
         mtype = data.get('type')
 
         if mtype == 'dm':
+            print("dm")
             if not target in self.db[uid]['relations']['friends']:
                 print("target not a friend")
                 return invalid

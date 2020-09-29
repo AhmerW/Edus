@@ -46,10 +46,31 @@ class Message(QtWidgets.QFrame):
 
 
 class LineFrame(QtWidgets.QFrame):
-    def __int__(self):
-        super().__init__()
+    def __init__(self, text, parent=None):
+        super().__init__(parent)
+        ## frame ##
         self.setMaximumHeight(50)
+        self.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.layout = QtWidgets.QHBoxLayout(self)
 
+        ## lines ##
+        self.line1 = self.createLine()
+        self.line2 = self.createLine()
+
+        ## text ##
+        self.label = QtWidgets.QLabel(self)
+        self.label.setMaximumSize(QtCore.QSize(50, 16777215))
+
+    def createLine(self):
+        line = QtWidgets.QFrame(self)
+        line.setFrameShape(QtWidgets.QFrame.HLine)
+        line.setFrameShadow(QtWidgets.QFrame.Sunken)
+
+    def create(self):
+        self.layout.addWidget(self.line1)
+        self.layout.addWidget(self.label)
+        self.layout.addWidget(self.line2)
 
 class Chat(object):
     def __init__(self, window, network, apic, loop, login):
@@ -60,11 +81,10 @@ class Chat(object):
         self.login = login
         self.dialog_emoji = EmojiDialog(self)
 
-
-
         self.window.chat_input.returnPressed.connect(self.addMsgSelf)
 
-
+        ## chat data ##
+        self.contacts = []
         self.frames = {}
         self.latest_by_self = False
         self.latest_by_self_time = None
@@ -97,7 +117,11 @@ class Chat(object):
 
     def addMsgSelf(self):
         frame = self.frames.get(self.current_contact_uid)
-        text = self.window.chat_input.text()
+        if not frame:
+            return
+        text = self.window.chat_input.text().strip()
+        if not text:
+            return
         #for emoji in emojis.get(text):
             #text = text.replace(emoji, '<h1>{0}</h1>'.format(emoji))
         self.createMsg(
@@ -139,10 +163,6 @@ class Chat(object):
         pl = 120 if from_self else 200
         _width = len(text)+pl
         _height = 100
-
-
-
-
         if _width > 300:
             _width = 300
             _height += 50
@@ -193,8 +213,8 @@ class Chat(object):
 
         return frame, layout
 
-    def clickedContact(self, contact : typing.Tuple[str, str]):
-        uid, name = contact
+    def clickedContact(self, contact):
+        uid, name = contact.uid, contact.name
         if self.current_contact == name:
             return
         self.window.chat_input.setPlaceholderText("Send a message to {0}".format(name))
@@ -211,11 +231,16 @@ class Chat(object):
 
 
 
-    def getContactButtons(self, window, widget, contacts):
+    def createContactButtons(self, window, widget, contacts):
+
+        first = contacts[0] if len(contacts) > 1 else None
         for contact in contacts:
             b = QtWidgets.QPushButton(window)
             widget.addWidget(b)
             b.setText(contact.name)
-            b.clicked.connect(partial(self.clickedContact, (contact.uid, contact.name)))
+            b.clicked.connect(partial(self.clickedContact, contact))
             self.network.button_values[contact.uid] = b
-        widget.addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
+        self.contact_spacer = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        widget.addItem(self.contact_spacer)
+        if first:
+            self.clickedContact(first)
